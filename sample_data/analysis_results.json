@@ -1,0 +1,848 @@
+[
+  {
+    "file_name": "Netgear - Roundwise.xlsx",
+    "file_size_bytes": 37812,
+    "sheet_names": [
+      "Registered",
+      "Round 2",
+      "Round 3",
+      "Round 4"
+    ],
+    "sheets_analysis": [
+      {
+        "sheet_name": "Registered",
+        "max_row": 336,
+        "max_column": 8,
+        "header_row_idx": 1,
+        "headers": [
+          "S No",
+          "Reg No.",
+          "Name",
+          "Gender",
+          "Mobile No",
+          "D/ H",
+          "Email Id",
+          "Specialization"
+        ],
+        "mapped_columns": {
+          "reg_no": [
+            2,
+            "Reg No."
+          ],
+          "name": [
+            3,
+            "Name"
+          ],
+          "gender": [
+            4,
+            "Gender"
+          ]
+        },
+        "records_count": 335,
+        "unique_reg_nos_count": 335,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Registered Sheet",
+        "sample_records": [
+          {
+            "row": 2,
+            "reg_no": "7376232AD101",
+            "name": "AATHINI S S",
+            "dept": null
+          },
+          {
+            "row": 3,
+            "reg_no": "7376232AD104",
+            "name": "ABINISHA A S",
+            "dept": null
+          },
+          {
+            "row": 4,
+            "reg_no": "7376242AD501",
+            "name": "ABIRAMI N M",
+            "dept": null
+          }
+        ],
+        "department_breakdown": {}
+      },
+      {
+        "sheet_name": "Round 2",
+        "max_row": 61,
+        "max_column": 4,
+        "header_row_idx": 1,
+        "headers": [
+          "S No",
+          "Reg No.",
+          "Name",
+          "Specialization"
+        ],
+        "mapped_columns": {
+          "reg_no": [
+            2,
+            "Reg No."
+          ],
+          "name": [
+            3,
+            "Name"
+          ]
+        },
+        "records_count": 60,
+        "unique_reg_nos_count": 60,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Progression Sheet",
+        "sample_records": [
+          {
+            "row": 2,
+            "reg_no": "7376242AD501",
+            "name": "ABIRAMI N M",
+            "dept": null
+          },
+          {
+            "row": 3,
+            "reg_no": "7376232AD112",
+            "name": "ASMA BANU I",
+            "dept": null
+          },
+          {
+            "row": 4,
+            "reg_no": "7376232AD143",
+            "name": "GURUNISHA S",
+            "dept": null
+          }
+        ],
+        "department_breakdown": {}
+      },
+      {
+        "sheet_name": "Round 3",
+        "max_row": 13,
+        "max_column": 6,
+        "header_row_idx": 3,
+        "headers": [
+          "S.No",
+          "Reg No.",
+          "Name",
+          "Gender",
+          "Mobile No",
+          "D/ H"
+        ],
+        "mapped_columns": {
+          "reg_no": [
+            2,
+            "Reg No."
+          ],
+          "name": [
+            3,
+            "Name"
+          ],
+          "gender": [
+            4,
+            "Gender"
+          ]
+        },
+        "records_count": 10,
+        "unique_reg_nos_count": 10,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Progression Sheet",
+        "sample_records": [
+          {
+            "row": 4,
+            "reg_no": "7376231CS191",
+            "name": "KAMALESH K",
+            "dept": null
+          },
+          {
+            "row": 5,
+            "reg_no": "7376231EC173",
+            "name": "JOTHIKA  S",
+            "dept": null
+          },
+          {
+            "row": 6,
+            "reg_no": "7376231CS313",
+            "name": "SOBIKA S M",
+            "dept": null
+          }
+        ],
+        "department_breakdown": {}
+      },
+      {
+        "sheet_name": "Round 4",
+        "max_row": 5,
+        "max_column": 6,
+        "header_row_idx": 3,
+        "headers": [
+          "S.No",
+          "Reg No.",
+          "Name",
+          "Gender",
+          "Mobile No",
+          "D/ H"
+        ],
+        "mapped_columns": {
+          "reg_no": [
+            2,
+            "Reg No."
+          ],
+          "name": [
+            3,
+            "Name"
+          ],
+          "gender": [
+            4,
+            "Gender"
+          ]
+        },
+        "records_count": 2,
+        "unique_reg_nos_count": 2,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Progression Sheet",
+        "sample_records": [
+          {
+            "row": 4,
+            "reg_no": "7376231CS313",
+            "name": "SOBIKA S M",
+            "dept": null
+          },
+          {
+            "row": 5,
+            "reg_no": "7376231EC134",
+            "name": "DHANUSRI K R R",
+            "dept": null
+          }
+        ],
+        "department_breakdown": {}
+      }
+    ]
+  },
+  {
+    "file_name": "PRESIDIO.xlsx",
+    "file_size_bytes": 26450,
+    "sheet_names": [
+      "Round 1",
+      "Round 2",
+      "offer "
+    ],
+    "sheets_analysis": [
+      {
+        "sheet_name": "Round 1",
+        "max_row": 420,
+        "max_column": 4,
+        "header_row_idx": 1,
+        "headers": [
+          "S no",
+          "Roll Number",
+          "Student Name",
+          "Department"
+        ],
+        "mapped_columns": {
+          "reg_no": [
+            2,
+            "Roll Number"
+          ],
+          "name": [
+            3,
+            "Student Name"
+          ],
+          "dept": [
+            4,
+            "Department"
+          ]
+        },
+        "records_count": 419,
+        "unique_reg_nos_count": 419,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Progression Sheet",
+        "sample_records": [
+          {
+            "row": 2,
+            "reg_no": "7376232AG103",
+            "name": "ARULSANKARAN N",
+            "dept": "Agricultural Engineering"
+          },
+          {
+            "row": 3,
+            "reg_no": "7376232AG106",
+            "name": "BHARATHEES  K",
+            "dept": "Agricultural Engineering"
+          },
+          {
+            "row": 4,
+            "reg_no": "7376232AG117",
+            "name": "GOKUL  V",
+            "dept": "Agricultural Engineering"
+          }
+        ],
+        "department_breakdown": {
+          "Agricultural Engineering": 6,
+          "Artificial Intelligence and Data Science": 51,
+          "Artificial Intelligence and Machine Learning": 31,
+          "Biomedical Engineering": 14,
+          "Biotechnology": 12,
+          "Computer Science and Business Systems": 19,
+          "Computer Science and Design": 13,
+          "Computer Science and Engineering": 98,
+          "Computer Technology": 20,
+          "Electrical and Electronics Engineering": 8,
+          "Electronics and Communication Engineering": 65,
+          "Electronics and Instrumentation Engineering": 8,
+          "Information Science and Engineering": 15,
+          "Information Technology": 47,
+          "Mechanical Engineering": 9,
+          "Mechatronics": 3
+        }
+      },
+      {
+        "sheet_name": "Round 2",
+        "max_row": 11,
+        "max_column": 4,
+        "header_row_idx": 1,
+        "headers": [
+          "S. No",
+          "Reg No",
+          "Candidates Name",
+          "Department"
+        ],
+        "mapped_columns": {
+          "reg_no": [
+            2,
+            "Reg No"
+          ],
+          "name": [
+            3,
+            "Candidates Name"
+          ],
+          "dept": [
+            4,
+            "Department"
+          ]
+        },
+        "records_count": 10,
+        "unique_reg_nos_count": 10,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Progression Sheet",
+        "sample_records": [
+          {
+            "row": 2,
+            "reg_no": "7376242AD508",
+            "name": "Thaveedhu Venkatachalam",
+            "dept": "Artificial Intelligence and Data Science"
+          },
+          {
+            "row": 3,
+            "reg_no": "7376232AL164",
+            "name": "Naveen Krishnaa S",
+            "dept": "Artificial Intelligence and Machine Learning"
+          },
+          {
+            "row": 4,
+            "reg_no": "7376232IT257",
+            "name": "Shashwath V R",
+            "dept": "Information Technology"
+          }
+        ],
+        "department_breakdown": {
+          "Artificial Intelligence and Data Science": 3,
+          "Artificial Intelligence and Machine Learning": 1,
+          "Information Technology": 2,
+          "Computer Science and Engineering": 4
+        }
+      },
+      {
+        "sheet_name": "offer ",
+        "max_row": 4,
+        "max_column": 4,
+        "header_row_idx": 1,
+        "headers": [
+          "S. No",
+          "Reg No",
+          "Candidates Name",
+          "Department"
+        ],
+        "mapped_columns": {
+          "reg_no": [
+            2,
+            "Reg No"
+          ],
+          "name": [
+            3,
+            "Candidates Name"
+          ],
+          "dept": [
+            4,
+            "Department"
+          ]
+        },
+        "records_count": 3,
+        "unique_reg_nos_count": 3,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Placed / Offered Sheet",
+        "sample_records": [
+          {
+            "row": 2,
+            "reg_no": "7376231CS333",
+            "name": "THAYANITHI S",
+            "dept": "Computer Science and Engineering"
+          },
+          {
+            "row": 3,
+            "reg_no": "7376232IT143",
+            "name": "GIRISH ASHOK GAIKWAD A",
+            "dept": "Information Technology"
+          },
+          {
+            "row": 4,
+            "reg_no": "7376232AD191",
+            "name": "Mahavishnu K",
+            "dept": "Artificial Intelligence and Data Science"
+          }
+        ],
+        "department_breakdown": {
+          "Computer Science and Engineering": 1,
+          "Information Technology": 1,
+          "Artificial Intelligence and Data Science": 1
+        }
+      }
+    ]
+  },
+  {
+    "file_name": "Soliton Roundwise Details.xlsx",
+    "file_size_bytes": 57283,
+    "sheet_names": [
+      "Round 1",
+      "AB",
+      "Round 2",
+      "Round 3",
+      "Round 4",
+      "Design round 5",
+      "OFFER"
+    ],
+    "sheets_analysis": [
+      {
+        "sheet_name": "Round 1",
+        "max_row": 1000,
+        "max_column": 26,
+        "header_row_idx": 1,
+        "headers": [
+          "S. No.",
+          "Roll / Reg No",
+          "Full Name",
+          "Branch",
+          "ad",
+          "Column_6",
+          "Column_7",
+          "Column_8",
+          "Column_9",
+          "Column_10",
+          "Column_11",
+          "Column_12",
+          "Column_13",
+          "Column_14",
+          "Column_15",
+          "Column_16",
+          "Column_17",
+          "Column_18",
+          "Column_19",
+          "Column_20",
+          "Column_21",
+          "Column_22",
+          "Column_23",
+          "Column_24",
+          "Column_25",
+          "Column_26"
+        ],
+        "mapped_columns": {
+          "reg_no": [
+            2,
+            "Roll / Reg No"
+          ],
+          "name": [
+            3,
+            "Full Name"
+          ],
+          "dept": [
+            4,
+            "Branch"
+          ]
+        },
+        "records_count": 520,
+        "unique_reg_nos_count": 520,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Progression Sheet",
+        "sample_records": [
+          {
+            "row": 2,
+            "reg_no": "7376232AD101",
+            "name": "Aathini S S",
+            "dept": "Artificial Intelligence and Data Science"
+          },
+          {
+            "row": 3,
+            "reg_no": "7376232AD104",
+            "name": "Abinisha A S",
+            "dept": "Artificial Intelligence and Data Science"
+          },
+          {
+            "row": 4,
+            "reg_no": "7376242AD501",
+            "name": "Abirami N M",
+            "dept": "Artificial Intelligence and Data Science"
+          }
+        ],
+        "department_breakdown": {
+          "Artificial Intelligence and Data Science": 80,
+          "Artificial Intelligence and Machine Learning": 33,
+          "Computer Science and Business Systems": 26,
+          "Computer Science and Design": 18,
+          "Computer Science and Engineering": 103,
+          "Computer Technology": 18,
+          "Electrical and Electronics Engineering": 11,
+          "Electronics and Communication Engineering": 115,
+          "Electronics and Instrumentation Engineering": 6,
+          "Information Science and Engineering": 17,
+          "Information Technology": 65,
+          "Mechanical Engineering": 14,
+          "Mechatronics Engineering": 14
+        }
+      },
+      {
+        "sheet_name": "AB",
+        "max_row": 13,
+        "max_column": 5,
+        "header_row_idx": 1,
+        "headers": [
+          "s.no",
+          "Register Number",
+          "Name",
+          "Email ID",
+          "Column_5"
+        ],
+        "mapped_columns": {
+          "reg_no": [
+            2,
+            "Register Number"
+          ],
+          "name": [
+            3,
+            "Name"
+          ]
+        },
+        "records_count": 12,
+        "unique_reg_nos_count": 12,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Registered / Master Sheet",
+        "sample_records": [
+          {
+            "row": 2,
+            "reg_no": "7376232CB149",
+            "name": "SIVA SUBRAMANI BHARATHI HARI KRISHNA",
+            "dept": null
+          },
+          {
+            "row": 3,
+            "reg_no": "7376231CS120",
+            "name": "BALASUTHARSAN M",
+            "dept": null
+          },
+          {
+            "row": 4,
+            "reg_no": "7376231CS317",
+            "name": "SOWUNDARYA R",
+            "dept": null
+          }
+        ],
+        "department_breakdown": {}
+      },
+      {
+        "sheet_name": "Round 2",
+        "max_row": 1000,
+        "max_column": 4,
+        "header_row_idx": 1,
+        "headers": [
+          "S.No",
+          "Reg number",
+          "Name",
+          "Department"
+        ],
+        "mapped_columns": {
+          "reg_no": [
+            2,
+            "Reg number"
+          ],
+          "name": [
+            3,
+            "Name"
+          ],
+          "dept": [
+            4,
+            "Department"
+          ]
+        },
+        "records_count": 46,
+        "unique_reg_nos_count": 46,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Progression Sheet",
+        "sample_records": [
+          {
+            "row": 2,
+            "reg_no": "7376232AD104",
+            "name": "Abinisha A S",
+            "dept": "Artificial Intelligence and Data Science"
+          },
+          {
+            "row": 3,
+            "reg_no": "7376232AD130",
+            "name": "Dharshini S",
+            "dept": "Artificial Intelligence and Data Science"
+          },
+          {
+            "row": 4,
+            "reg_no": "7376232AD144",
+            "name": "Hari Ganessh P S",
+            "dept": "Artificial Intelligence and Data Science"
+          }
+        ],
+        "department_breakdown": {
+          "Artificial Intelligence and Data Science": 9,
+          "Artificial Intelligence and Machine Learning": 2,
+          "Computer Science and Business Systems": 1,
+          "Computer Science and Design": 2,
+          "Computer Science and Engineering": 8,
+          "Electronics and Communication Engineering": 13,
+          "Electronics and Instrumentation Engineering": 1,
+          "Information Science and Engineering": 1,
+          "Information Technology": 8,
+          "Mechatronics Engineering": 1
+        }
+      },
+      {
+        "sheet_name": "Round 3",
+        "max_row": 31,
+        "max_column": 4,
+        "header_row_idx": 1,
+        "headers": [
+          "S. No.",
+          "Roll/Reg No",
+          "Full Name",
+          "Branch"
+        ],
+        "mapped_columns": {
+          "reg_no": [
+            2,
+            "Roll/Reg No"
+          ],
+          "name": [
+            3,
+            "Full Name"
+          ],
+          "dept": [
+            4,
+            "Branch"
+          ]
+        },
+        "records_count": 30,
+        "unique_reg_nos_count": 30,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Progression Sheet",
+        "sample_records": [
+          {
+            "row": 2,
+            "reg_no": "7376232AD130",
+            "name": "Muralidharan R",
+            "dept": "Computer Science and Design"
+          },
+          {
+            "row": 3,
+            "reg_no": "7376232AD144",
+            "name": "Dinesh S",
+            "dept": "Electronics and Communication Engineering"
+          },
+          {
+            "row": 4,
+            "reg_no": "7376232AD145",
+            "name": "Mohammed Afeef M",
+            "dept": "Artificial Intelligence and Data Science"
+          }
+        ],
+        "department_breakdown": {
+          "Computer Science and Design": 2,
+          "Electronics and Communication Engineering": 11,
+          "Artificial Intelligence and Data Science": 5,
+          "Information Technology": 4,
+          "Computer Science and Engineering": 6,
+          "Mechatronics Engineering": 1,
+          "Information Science and Engineering": 1
+        }
+      },
+      {
+        "sheet_name": "Round 4",
+        "max_row": 13,
+        "max_column": 2,
+        "header_row_idx": 1,
+        "headers": [
+          "S.No",
+          "Name"
+        ],
+        "mapped_columns": {
+          "name": [
+            2,
+            "Name"
+          ]
+        },
+        "records_count": 12,
+        "unique_reg_nos_count": 12,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Progression Sheet",
+        "sample_records": [
+          {
+            "row": 2,
+            "reg_no": "7376231SE116",
+            "name": "GAYATHIRI E",
+            "dept": null
+          },
+          {
+            "row": 3,
+            "reg_no": "7376231EC158",
+            "name": "HARISHMITHA R",
+            "dept": null
+          },
+          {
+            "row": 4,
+            "reg_no": "7376231EC140",
+            "name": "DINESH S",
+            "dept": null
+          }
+        ],
+        "department_breakdown": {}
+      },
+      {
+        "sheet_name": "Design round 5",
+        "max_row": 11,
+        "max_column": 2,
+        "header_row_idx": 1,
+        "headers": [
+          "S.No",
+          "Name"
+        ],
+        "mapped_columns": {
+          "name": [
+            2,
+            "Name"
+          ]
+        },
+        "records_count": 10,
+        "unique_reg_nos_count": 10,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Progression Sheet",
+        "sample_records": [
+          {
+            "row": 2,
+            "reg_no": "7376231SE116",
+            "name": "GAYATHIRI E",
+            "dept": null
+          },
+          {
+            "row": 3,
+            "reg_no": "7376231EC158",
+            "name": "HARISHMITHA R",
+            "dept": null
+          },
+          {
+            "row": 4,
+            "reg_no": "7376231EC140",
+            "name": "DINESH S",
+            "dept": null
+          }
+        ],
+        "department_breakdown": {}
+      },
+      {
+        "sheet_name": "OFFER",
+        "max_row": 8,
+        "max_column": 8,
+        "header_row_idx": 1,
+        "headers": [
+          "Column_1",
+          "Column_2",
+          "Column_3",
+          "Column_4",
+          "Column_5",
+          "Column_6",
+          "S.No",
+          "Name"
+        ],
+        "mapped_columns": {
+          "name": [
+            8,
+            "Name"
+          ]
+        },
+        "records_count": 7,
+        "unique_reg_nos_count": 7,
+        "duplicate_reg_nos_count": 0,
+        "duplicate_samples": [],
+        "malformed_reg_nos_count": 0,
+        "malformed_samples": [],
+        "sheet_category": "Placed / Offered Sheet",
+        "sample_records": [
+          {
+            "row": 2,
+            "reg_no": "7376231SE116",
+            "name": "GAYATHIRI E",
+            "dept": null
+          },
+          {
+            "row": 3,
+            "reg_no": "7376231EC158",
+            "name": "HARISHMITHA R",
+            "dept": null
+          },
+          {
+            "row": 4,
+            "reg_no": "7376231EC140",
+            "name": "DINESH S",
+            "dept": null
+          }
+        ],
+        "department_breakdown": {}
+      }
+    ]
+  }
+]

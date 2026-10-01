@@ -1,0 +1,63 @@
+==========================================
+CROSS-ROUND PROGRESSION & ANOMALY REPORT
+==========================================
+
+WORKBOOK: Netgear - Roundwise.xlsx
+
+  Sheet [Registered]: 335 records, 335 unique reg numbers
+    Header Row: 1, Reg Header: 'Reg No.', Name Header: 'Name', Dept Header: 'Specialization'
+    ⚠️ Malformed Reg Nos (2): [[178, '7377231CS289', 'RUBIKA V S'], [213, '8667022811', 'THILAK R P']]
+
+  Sheet [Round 2]: 60 records, 60 unique reg numbers
+    Header Row: 1, Reg Header: 'Reg No.', Name Header: 'Name', Dept Header: 'Specialization'
+    ✅ All 60 reg numbers in 'Round 2' exist in initial sheet 'Registered'
+
+  Sheet [Round 3]: 10 records, 10 unique reg numbers
+    Header Row: 3, Reg Header: 'Reg No.', Name Header: 'Name', Dept Header: 'None'
+    ✅ All 10 reg numbers in 'Round 3' exist in initial sheet 'Registered'
+
+  Sheet [Round 4]: 2 records, 2 unique reg numbers
+    Header Row: 3, Reg Header: 'Reg No.', Name Header: 'Name', Dept Header: 'None'
+    ✅ All 2 reg numbers in 'Round 4' exist in initial sheet 'Registered'
+
+WORKBOOK: PRESIDIO.xlsx
+
+  Sheet [Round 1]: 419 records, 419 unique reg numbers
+    Header Row: 1, Reg Header: 'Roll Number', Name Header: 'Student Name', Dept Header: 'Department'
+
+  Sheet [Round 2]: 10 records, 10 unique reg numbers
+    Header Row: 1, Reg Header: 'Reg No', Name Header: 'Candidates Name', Dept Header: 'Department'
+    ⚠️ WARNING: 2 reg number(s) in 'Round 2' were NOT present in initial sheet 'Round 1': ['7376231CS333', '7376232AL164']
+
+  Sheet [offer ]: 3 records, 3 unique reg numbers
+    Header Row: 1, Reg Header: 'Reg No', Name Header: 'Candidates Name', Dept Header: 'Department'
+    ⚠️ WARNING: 1 reg number(s) in 'offer ' were NOT present in initial sheet 'Round 1': ['7376231CS333']
+
+WORKBOOK: Soliton Roundwise Details.xlsx
+
+  Sheet [Round 1]: 520 records, 520 unique reg numbers
+    Header Row: 1, Reg Header: 'Roll / Reg No', Name Header: 'Full Name', Dept Header: 'Branch'
+
+  Sheet [AB]: 12 records, 12 unique reg numbers
+    Header Row: 1, Reg Header: 'Register Number', Name Header: 'Name', Dept Header: 'None'
+    ✅ All 12 reg numbers in 'AB' exist in initial sheet 'Round 1'
+
+  Sheet [Round 2]: 46 records, 46 unique reg numbers
+    Header Row: 1, Reg Header: 'Reg number', Name Header: 'Name', Dept Header: 'Department'
+    ✅ All 46 reg numbers in 'Round 2' exist in initial sheet 'Round 1'
+
+  Sheet [Round 3]: 30 records, 30 unique reg numbers
+    Header Row: 1, Reg Header: 'Roll/Reg No', Name Header: 'Full Name', Dept Header: 'Branch'
+    ✅ All 30 reg numbers in 'Round 3' exist in initial sheet 'Round 1'
+
+  Sheet [Round 4]: 12 records, 12 unique reg numbers
+    Header Row: 1, Reg Header: 'S.No', Name Header: 'Name', Dept Header: 'None'
+    ✅ All 12 reg numbers in 'Round 4' exist in initial sheet 'Round 1'
+
+  Sheet [Design round 5]: 10 records, 10 unique reg numbers
+    Header Row: 1, Reg Header: 'S.No', Name Header: 'Name', Dept Header: 'None'
+    ✅ All 10 reg numbers in 'Design round 5' exist in initial sheet 'Round 1'
+
+  Sheet [OFFER]: 7 records, 7 unique reg numbers
+    Header Row: 1, Reg Header: 'S.No', Name Header: 'Name', Dept Header: 'None'
+    ✅ All 7 reg numbers in 'OFFER' exist in initial sheet 'Round 1'

@@ -1,0 +1,204 @@
+
+==========================================
+FILE: Netgear - Roundwise.xlsx
+==========================================
+
+--- SHEET: 'Registered' (max_row=336, max_col=8) ---
+  Row  1: ['S No', 'Reg No.', 'Name', 'Gender', 'Mobile No', 'D/ H', 'Email Id', 'Specialization']
+  Row  2: [1, '7376232AD101', 'AATHINI S S', 'Female', 9345795447, 'Day Scholar', 'aathini.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+  Row  3: [2, '7376232AD104', 'ABINISHA A S', 'Female', 8072132817, 'Hosteller', 'abinisha.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+  Row  4: [3, '7376242AD501', 'ABIRAMI N M', 'Female', 6380374104, 'Day Scholar', 'abiraminm.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+  Row  5: [4, '7376232AD106', 'AJITHA R', 'Female', 7339667139, 'Hosteller', 'ajitha.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+  Row  6: [5, '7376232AD108', 'ARAVINTH S K', 'Female', 6381569829, 'Hosteller', 'aravinthsk.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+  Row  7: [6, '7376232AD109', 'ARCHANA S', 'Female', 9342858673, 'Hosteller', 'archana.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+  Row  8: [7, '7376232AD111', 'ARUN N', 'Male', 7200924179, 'Hosteller', 'arun.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+  Row  9: [8, '7376232AD112', 'ASMA BANU I', 'Female', 9677617836, 'Hosteller', 'asmabanu.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+  Row 10: [9, '7376232AD113', 'ASWIN V K', 'Male', 9488512807, 'Hosteller', 'aswin.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+  Row 11: [10, '7376232AD116', 'BHARATH L', 'Male', 8056740238, 'Hosteller', 'bharath.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+  Row 12: [11, '7376232AD121', 'CHARUMATHI S', 'Female', 7010391311, 'Hosteller', 'charumathi.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+  Row 13: [12, '7376232AD124', 'DARSHANA R', 'Female', 9976583100, 'Hosteller', 'darshanaramesh.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+  Row 14: [13, '7376232AD123', 'DARSHANA S', 'Female', 9363025456, 'Hosteller', 'darshana.ad23@bitsathy.ac.in', 'Artificial Intelligence and Data Science']
+
+--- SHEET: 'Round 2' (max_row=61, max_col=4) ---
+  Row  1: ['S No', 'Reg No.', 'Name', 'Specialization']
+  Row  2: [1, '7376242AD501', 'ABIRAMI N M', 'Artificial Intelligence and Data Science']
+  Row  3: [2, '7376232AD112', 'ASMA BANU I', 'Artificial Intelligence and Data Science']
+  Row  4: [3, '7376232AD143', 'GURUNISHA S', 'Artificial Intelligence and Data Science']
+  Row  5: [4, '7376232AD202', 'NANDIDWAJ  R G', 'Artificial Intelligence and Data Science']
+  Row  6: [5, '7376232AD210', 'PRADEEP KUMAR  V', 'Artificial Intelligence and Data Science']
+  Row  7: [6, '7376232AD176', 'KARTHIKEYAN R', 'Artificial Intelligence and Data Science']
+  Row  8: [7, '7376232AL105', 'ARUN PRAKASH E', 'Artificial Intelligence and Machine Learning']
+  Row  9: [8, '7376232AL169', 'NEGASHREE S', 'Artificial Intelligence and Machine Learning']
+  Row 10: [9, '7376232AL197', 'SUBIKSHA S K', 'Artificial Intelligence and Machine Learning']
+  Row 11: [10, '7376232CB128', 'LEELADEVI A', 'Computer Science and Business Systems']
+  Row 12: [11, '7376232CB135', 'PEER SHEIK ABDULLAH MOHD NOORDEEN', 'Computer Science and Business Systems']
+  Row 13: [12, '7376232CB104', 'ASHWIN S', 'Computer Science and Business Systems']
+  Row 14: [13, '7376232CB156', 'SUDHARSHANA M K', 'Computer Science and Business Systems']
+
+--- SHEET: 'Round 3' (max_row=13, max_col=6) ---
+  Merged cell ranges: ['A1:F1', 'C2:F2', 'A2:B2']
+  Row  1: ['2023-2027 Batch Netgear Placement Drive Shortlisted List', None, None, None, None, None]
+  Row  2: ['Date : 23.07.2026 AN ', None, 'ROUND 3', None, None, None]
+  Row  3: ['S.No', 'Reg No.', 'Name', 'Gender', 'Mobile No', 'D/ H']
+  Row  4: [1, '7376231CS191', 'KAMALESH K', 'Male', 6369026251, 'Hosteller']
+  Row  5: [2, '7376231EC173', 'JOTHIKA  S', 'Female', 7200910155, 'Day Scholar']
+  Row  6: [3, '7376231CS313', 'SOBIKA S M', 'Female', 9751515795, 'Day Scholar']
+  Row  7: [4, '7376232AD112', 'ASMA BANU I', 'Female', 9677617836, 'Hosteller']
+  Row  8: [5, '7376231CD155', 'SWEATHA M P', 'Female', 9042491995, 'Hosteller']
+  Row  9: [6, '7376231EC259', 'RITIKA DEVI M K', 'Female', 8760662760, 'Hosteller']
+  Row 10: [7, '7376231EC134', 'DHANUSRI K R R', 'Female', 8825608620, 'Day Scholar']
+  Row 11: [8, '7376232CB156', 'SUDHARSHANA M K', 'Female', 8248932487, 'Day Scholar']
+  Row 12: [9, '7376231EC274', 'SATHISH KUMAR R', 'Male', 6374448625, 'Day Scholar']
+  Row 13: [10, '7376232IT114', 'ARVINDH S', 'Male', 9626163456, 'Day Scholar']
+
+--- SHEET: 'Round 4' (max_row=5, max_col=6) ---
+  Merged cell ranges: ['A1:F1', 'C2:F2', 'A2:B2']
+  Row  1: ['2023-2027 Batch Netgear Placement Drive Shortlisted List', None, None, None, None, None]
+  Row  2: ['Date : 23.07.2026 AN ', None, 'ROUND 4', None, None, None]
+  Row  3: ['S.No', 'Reg No.', 'Name', 'Gender', 'Mobile No', 'D/ H']
+  Row  4: [1, '7376231CS313', 'SOBIKA S M', 'Female', 9751515795, 'Day Scholar']
+  Row  5: [2, '7376231EC134', 'DHANUSRI K R R', 'Female', 8825608620, 'Day Scholar']
+
+==========================================
+FILE: PRESIDIO.xlsx
+==========================================
+
+--- SHEET: 'Round 1' (max_row=420, max_col=4) ---
+  Row  1: [' S no', 'Roll Number ', 'Student Name', 'Department']
+  Row  2: [1, '7376232AG103', 'ARULSANKARAN N', 'Agricultural Engineering']
+  Row  3: [2, '7376232AG106', 'BHARATHEES  K', 'Agricultural Engineering']
+  Row  4: [3, '7376232AG117', 'GOKUL  V', 'Agricultural Engineering']
+  Row  5: [4, '7376232AG125', 'KAVYA D', 'Agricultural Engineering']
+  Row  6: [5, '7376232AG127', 'KOWSHIKA R', 'Agricultural Engineering']
+  Row  7: [6, '7376232AG133', 'MOHAMMED ASHFAR M', 'Agricultural Engineering']
+  Row  8: [7, '7376242AD501', 'ABIRAMI N M', 'Artificial Intelligence and Data Science']
+  Row  9: [8, '7376232AD107', 'AKSHARA B K', 'Artificial Intelligence and Data Science']
+  Row 10: [9, '7376232AD110', 'ARIKRISHNAN  R', 'Artificial Intelligence and Data Science']
+  Row 11: [10, '7376232AD113', 'ASWIN V K', 'Artificial Intelligence and Data Science']
+  Row 12: [11, '7376232AD117', 'BHARATH M B', 'Artificial Intelligence and Data Science']
+  Row 13: [12, '7376232AD121', 'CHARUMATHI S', 'Artificial Intelligence and Data Science']
+  Row 14: [13, '7376232AD123', 'DARSHANA  S', 'Artificial Intelligence and Data Science']
+
+--- SHEET: 'Round 2' (max_row=11, max_col=4) ---
+  Row  1: ['S. No', 'Reg No', 'Candidates Name', 'Department']
+  Row  2: [1, '7376242AD508', 'Thaveedhu Venkatachalam', 'Artificial Intelligence and Data Science']
+  Row  3: [2, '7376232AL164', 'Naveen Krishnaa S', 'Artificial Intelligence and Machine Learning']
+  Row  4: [3, '7376232IT257', 'Shashwath V R', 'Information Technology']
+  Row  5: [4, '7376231CS333', 'THAYANITHI S', 'Computer Science and Engineering']
+  Row  6: [5, '7376232IT143', 'GIRISH ASHOK GAIKWAD A', 'Information Technology']
+  Row  7: [6, '7376232AD113', 'ASWIN V K', 'Artificial Intelligence and Data Science']
+  Row  8: [7, '7376231CS148', 'DIVYAPRAKASH R', 'Computer Science and Engineering']
+  Row  9: [8, '7376231CS245', 'NAVANEETHA KRISHNAN S', 'Computer Science and Engineering']
+  Row 10: [9, '7376232AD191', 'Mahavishnu K', 'Artificial Intelligence and Data Science']
+  Row 11: [10, '7376231CS193', 'KANISH B M', 'Computer Science and Engineering']
+
+--- SHEET: 'offer ' (max_row=4, max_col=4) ---
+  Row  1: ['S. No', 'Reg No', 'Candidates Name', 'Department']
+  Row  2: [1, '7376231CS333', 'THAYANITHI S', 'Computer Science and Engineering']
+  Row  3: [2, '7376232IT143', 'GIRISH ASHOK GAIKWAD A', 'Information Technology']
+  Row  4: [3, '7376232AD191', 'Mahavishnu K', 'Artificial Intelligence and Data Science']
+
+==========================================
+FILE: Soliton Roundwise Details.xlsx
+==========================================
+
+--- SHEET: 'Round 1' (max_row=1000, max_col=26) ---
+  Row  1: ['S. No.', 'Roll / Reg No', 'Full Name', 'Branch', 'ad', None, None, None, None, None, None, None, None, None]
+  Row  2: [1.0, '7376232AD101', 'Aathini S S', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+  Row  3: [2.0, '7376232AD104', 'Abinisha A S', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+  Row  4: [3.0, '7376242AD501', 'Abirami N M', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+  Row  5: [4.0, '7376232AD110', 'Arikrishnan R', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+  Row  6: [5.0, '7376232AD111', 'Arun N', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+  Row  7: [6.0, '7376232AD112', 'Asma Banu I', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+  Row  8: [7.0, '7376232AD116', 'Bharath L', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+  Row  9: [8.0, '7376232AD121', 'Charumathi S', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+  Row 10: [9.0, '7376232AD124', 'Darshana R', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+  Row 11: [10.0, '7376232AD123', 'Darshana S', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+  Row 12: [11.0, '7376232AD126', 'Dhanusree K', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+  Row 13: [12.0, '7376232AD130', 'Dharshini S', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+  Row 14: [13.0, '7376232AD134', 'Dineshbalan B', 'Artificial Intelligence and Data Science', '#N/A', None, None, None, None, None, None, None, None, None]
+
+--- SHEET: 'AB' (max_row=13, max_col=5) ---
+  Row  1: ['s.no ', 'Register Number ', 'Name', 'Email ID', None]
+  Row  2: [1.0, '7376232CB149', 'SIVA SUBRAMANI BHARATHI HARI KRISHNA', 'bharathiharikrishna.cb23@bitsathy.ac.in', 'AB']
+  Row  3: [2.0, '7376231CS120', 'BALASUTHARSAN M', 'balasutharsan.cs23@bitsathy.ac.in', 'AB']
+  Row  4: [3.0, '7376231CS317', 'SOWUNDARYA R', 'sowundarya.cs23@bitsathy.ac.in', 'AB']
+  Row  5: [4.0, '7376231CS332', 'THANUSHA A', 'thanusha.cs23@bitsathy.ac.in', 'AB']
+  Row  6: [5.0, '7376231CS352', 'YAZHINI K', 'yazhini.cs23@bitsathy.ac.in', 'AB']
+  Row  7: [6.0, '7376232CT131', 'PRAVEEN V', 'praveen.ct23@bitsathy.ac.in', 'AB']
+  Row  8: [7.0, '7376231EC113', 'APSARA A R', 'apsara.ec23@bitsathy.ac.in', 'AB']
+  Row  9: [8.0, '7376231EC168', 'JAYAPRABHA GOKUL KUMAR', 'jayaprabha.ec23@bitsathy.ac.in', 'AB']
+  Row 10: [9.0, '7376231EC287', 'SIVASUBRAMANIYAM S', 'sivasubramaniyam.ec23@bitsathy.ac.in', 'AB']
+  Row 11: [10.0, '7376231SE129', 'MEROSAN P', 'merosan.se23@bitsathy.ac.in', 'AB']
+  Row 12: [11.0, '7376232IT161', 'HEMASRI M', 'hemasri.it23@bitsathy.ac.in', 'AB']
+  Row 13: [12.0, '7376231ME108', 'DARSHANA SREE J M', 'darshanasree.me23@bitsathy.ac.in', 'AB']
+
+--- SHEET: 'Round 2' (max_row=1000, max_col=4) ---
+  Row  1: ['S.No', 'Reg number', 'Name', 'Department']
+  Row  2: [1.0, '7376232AD104', 'Abinisha A S', 'Artificial Intelligence and Data Science']
+  Row  3: [2.0, '7376232AD130', 'Dharshini S', 'Artificial Intelligence and Data Science']
+  Row  4: [3.0, '7376232AD144', 'Hari Ganessh P S', 'Artificial Intelligence and Data Science']
+  Row  5: [4.0, '7376232AD145', 'Harikesh M', 'Artificial Intelligence and Data Science']
+  Row  6: [5.0, '7376232AD195', 'Mohammed Afeef M', 'Artificial Intelligence and Data Science']
+  Row  7: [6.0, '7376232AD205', 'Nivas M R', 'Artificial Intelligence and Data Science']
+  Row  8: [7.0, '7376232AD213', 'Praneeth K A', 'Artificial Intelligence and Data Science']
+  Row  9: [8.0, '7376232AD217', 'Praveen A', 'Artificial Intelligence and Data Science']
+  Row 10: [9.0, '7376232AD252', 'Sharvesh R', 'Artificial Intelligence and Data Science']
+  Row 11: [10.0, '7376232AL151', 'Mahithaa Sri S K', 'Artificial Intelligence and Machine Learning']
+  Row 12: [11.0, '7376232AL212', 'Varshini M', 'Artificial Intelligence and Machine Learning']
+  Row 13: [12.0, '7376232CB119', 'Hari Hara Sudhan N', 'Computer Science and Business Systems']
+  Row 14: [13.0, '7376231CD124', 'Logithkumar K R', 'Computer Science and Design']
+
+--- SHEET: 'Round 3' (max_row=31, max_col=4) ---
+  Row  1: ['S. No.', 'Roll/Reg No', 'Full Name', 'Branch']
+  Row  2: [1.0, '7376232AD130', 'Muralidharan R', 'Computer Science and Design']
+  Row  3: [2.0, '7376232AD144', 'Dinesh S', 'Electronics and Communication Engineering']
+  Row  4: [3.0, '7376232AD145', 'Mohammed Afeef M', 'Artificial Intelligence and Data Science']
+  Row  5: [4.0, '7376232AD195', 'Harishmitha R', 'Electronics and Communication Engineering']
+  Row  6: [5.0, '7376232AD252', 'Mohith M', 'Electronics and Communication Engineering']
+  Row  7: [6.0, '7376231CD124', 'Rahul Sanjay G', 'Information Technology']
+  Row  8: [7.0, '7376231CD131', 'Kavin K R', 'Computer Science and Engineering']
+  Row  9: [8.0, '7376231CS107', 'Navaneetha Krishnan S', 'Computer Science and Engineering']
+  Row 10: [9.0, '7376231CS200', 'Naven K S', 'Mechatronics Engineering']
+  Row 11: [10.0, '7376231CS203', 'Harikesh M', 'Artificial Intelligence and Data Science']
+  Row 12: [11.0, '7376231CS208', 'Hari Ganessh P S', 'Artificial Intelligence and Data Science']
+  Row 13: [12.0, '7376231CS245', 'Shashwath V R', 'Information Technology']
+  Row 14: [13.0, '7376231CS343', 'Kamali R', 'Information Technology']
+
+--- SHEET: 'Round 4' (max_row=13, max_col=2) ---
+  Row  1: ['S.No', 'Name']
+  Row  2: ['7376231SE116', 'GAYATHIRI E']
+  Row  3: ['7376231EC158', 'HARISHMITHA R']
+  Row  4: ['7376231EC140', 'DINESH S']
+  Row  5: ['7376231CS343', 'VENKATAKRISHNAN S']
+  Row  6: ['7376231CS107', 'ADHAVAN SE V']
+  Row  7: ['7376232AD252', 'SHARVESH RAMALINGAM']
+  Row  8: ['7376232AD195', 'MOHAMMED AFEEF M']
+  Row  9: ['7376231EC192', 'KOUSIK A B']
+  Row 10: ['7376231CS245', 'NAVANEETHA KRISHNAN S']
+  Row 11: ['7376231EC209', 'MANOJ R']
+  Row 12: ['7376231CD131', 'MURALIDHARAN R']
+  Row 13: ['7376232IT203', 'MOHITH M']
+
+--- SHEET: 'Design round 5' (max_row=11, max_col=2) ---
+  Row  1: ['S.No', 'Name']
+  Row  2: ['7376231SE116', 'GAYATHIRI E']
+  Row  3: ['7376231EC158', 'HARISHMITHA R']
+  Row  4: ['7376231EC140', 'DINESH S']
+  Row  5: ['7376231CS107', 'ADHAVAN SE V']
+  Row  6: ['7376232AD252', 'SHARVESH RAMALINGAM']
+  Row  7: ['7376232AD195', 'MOHAMMED AFEEF M']
+  Row  8: ['7376231EC192', 'KOUSIK A B']
+  Row  9: ['7376231CS245', 'NAVANEETHA KRISHNAN S']
+  Row 10: ['7376231EC209', 'MANOJ R']
+  Row 11: ['7376232IT203', 'MOHITH M']
+
+--- SHEET: 'OFFER' (max_row=8, max_col=8) ---
+  Row  1: [None, None, None, None, None, None, 'S.No', 'Name']
+  Row  2: [None, None, None, None, None, None, '7376231SE116', 'GAYATHIRI E']
+  Row  3: [None, None, None, None, None, None, '7376231EC158', 'HARISHMITHA R']
+  Row  4: [None, None, None, None, None, None, '7376231EC140', 'DINESH S']
+  Row  5: [None, None, None, None, None, None, '7376231CS107', 'ADHAVAN SE V']
+  Row  6: [None, None, None, None, None, None, '7376232AD252', 'SHARVESH RAMALINGAM']
+  Row  7: [None, None, None, None, None, None, '7376232AD195', 'MOHAMMED AFEEF M']
+  Row  8: [None, None, None, None, None, None, '7376231EC192', 'KOUSIK A B']

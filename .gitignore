@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.env
+backend/diag_out.txt
+backend/parser_diag.txt
+backend/test_out.txt
+.venv/
+env/
+venv/
