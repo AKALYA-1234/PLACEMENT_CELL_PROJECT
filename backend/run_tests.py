@@ -36,9 +36,15 @@ from tests.test_auth import (
     test_protected_import_confirm_unauthorized,
     test_protected_import_validate_with_token
 )
+from tests.test_admin_apis import (
+    test_imports_api,
+    test_students_api,
+    test_companies_api,
+    test_analytics_api
+)
 
 def run():
-    print("=== RUNNING PHASE 4, 5, 6, & 7 FULL TEST SUITE ===")
+    print("=== RUNNING PHASE 4, 5, 6, 7, & 8 FULL TEST SUITE ===")
     tests = [
         ("Register Normalizer", test_register_number_normalizer),
         ("Status Normalizer", test_status_normalizer),
@@ -62,6 +68,10 @@ def run():
         ("Protected Import Validate Endpoint 401 Check", test_protected_import_validate_unauthorized),
         ("Protected Import Confirm Endpoint 401 Check", test_protected_import_confirm_unauthorized),
         ("Protected Import Validate Endpoint Token Authorized", test_protected_import_validate_with_token),
+        ("Admin Imports List & Detail API", test_imports_api),
+        ("Admin Students List & Detail API", test_students_api),
+        ("Admin Companies, Drives & Stats API", test_companies_api),
+        ("Admin Analytics Overview, Depts, Companies & Rounds API", test_analytics_api),
     ]
     
     passed = 0
