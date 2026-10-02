@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import auth
+from app.api import import_routes
 
 logger = logging.getLogger("placement_cell")
 
@@ -36,6 +37,7 @@ def create_app() -> FastAPI:
 
     # Routers
     app.include_router(auth.router)
+    app.include_router(import_routes.router)
 
     @app.get("/api/health", tags=["Health"])
     def health_check():

@@ -15,9 +15,14 @@ from tests.test_db_ingestion import (
     test_db_ingestion_presidio,
     test_db_ingestion_soliton
 )
+from tests.test_import_validation import (
+    test_validate_import_service_netgear,
+    test_validate_import_endpoint_presidio,
+    test_validate_import_endpoint_soliton
+)
 
 def run():
-    print("=== RUNNING PHASE 4 EXCEL PARSER & DB INGESTION TESTS ===")
+    print("=== RUNNING PHASE 4 & PHASE 5 FULL TEST SUITE ===")
     tests = [
         ("Register Normalizer", test_register_number_normalizer),
         ("Status Normalizer", test_status_normalizer),
@@ -26,6 +31,9 @@ def run():
         ("Soliton Workbook Parser", test_parse_soliton_workbook),
         ("Presidio DB Ingestion Bridge", test_db_ingestion_presidio),
         ("Soliton DB Ingestion Bridge", test_db_ingestion_soliton),
+        ("Netgear Import Validation Service", test_validate_import_service_netgear),
+        ("Presidio Import Validation API (POST /admin/import/validate)", test_validate_import_endpoint_presidio),
+        ("Soliton Import Validation API (POST /admin/import/validate)", test_validate_import_endpoint_soliton),
     ]
     
     passed = 0
