@@ -20,9 +20,14 @@ from tests.test_import_validation import (
     test_validate_import_endpoint_presidio,
     test_validate_import_endpoint_soliton
 )
+from tests.test_import_confirm import (
+    test_confirm_import_presidio_endpoint,
+    test_confirm_import_idempotency,
+    test_confirm_import_unvalidated_rejection
+)
 
 def run():
-    print("=== RUNNING PHASE 4 & PHASE 5 FULL TEST SUITE ===")
+    print("=== RUNNING PHASE 4, 5, & 6 FULL TEST SUITE ===")
     tests = [
         ("Register Normalizer", test_register_number_normalizer),
         ("Status Normalizer", test_status_normalizer),
@@ -34,6 +39,9 @@ def run():
         ("Netgear Import Validation Service", test_validate_import_service_netgear),
         ("Presidio Import Validation API (POST /admin/import/validate)", test_validate_import_endpoint_presidio),
         ("Soliton Import Validation API (POST /admin/import/validate)", test_validate_import_endpoint_soliton),
+        ("Presidio Import Confirm API (POST /admin/import/confirm)", test_confirm_import_presidio_endpoint),
+        ("Import Confirm Idempotency Test", test_confirm_import_idempotency),
+        ("Unvalidated Import Rejection Test", test_confirm_import_unvalidated_rejection),
     ]
     
     passed = 0

@@ -3,7 +3,9 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.services.excel_parser.validation_models import ImportValidationResponse
+from app.services.excel_parser.confirm_models import ImportConfirmResponse
 from app.services.excel_parser.import_validation_service import validate_excel_import
+from app.services.excel_parser.import_confirm_service import confirm_excel_import
 
 router = APIRouter(prefix="/admin/import", tags=["Admin Import"])
 
@@ -41,3 +43,49 @@ async def validate_excel_import_endpoint(
     )
 
     return validation_response
+
+
+@router.post("/confirm", response_model=ImportConfirmResponse)
+async def confirm_excel_import_endpoint(
+    file: UploadFile = File(...),
+    company_name: str = Form(...),
+    academic_year: str = Form("2025-2026"),
+    db: Session = Depends(get_db)
+) -> ImportConfirmResponse:
+    """
+    Confirms and executes PostgreSQL database insertion for a validated Excel workbook.
+    Rejects unvalidated or malformed workbooks.
+    """
+    if not file.filename or not file.filename.lower().endswith((".xlsx", ".xls")):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid file format. Please upload a valid Excel workbook (.xlsx or .xls)."
+        )
+
+    contents = await file.read()
+    if not contents:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Uploaded file is empty."
+        )
+
+    try:
+        confirm_response = confirm_excel_import(
+            file_input=contents,
+            file_name=file.filename,
+            company_name=company_name,
+            academic_year=academic_year,
+            db=db
+        )
+        return confirm_response
+
+    except ValueError as ve:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(ve)
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Import failed during database execution: {str(e)}"
+        )
