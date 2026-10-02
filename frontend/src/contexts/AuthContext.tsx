@@ -1,55 +1,71 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import api from '../api/client';
-import { AdminUser } from '../types';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { api } from "../api/client";
+
+export interface AdminUser {
+    id: number;
+    email: string;
+    full_name: string;
+    role: string;
+    is_active: boolean;
+}
 
 interface AuthContextType {
-    token: string | null;
     admin: AdminUser | null;
-    loading: boolean;
-    login: (token: string) => Promise<void>;
+    token: string | null;
+    isLoading: boolean;
+    login: (email: string, password: string) => Promise<void>;
     logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
     const [admin, setAdmin] = useState<AdminUser | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-
-    const fetchAdmin = async () => {
-        try {
-            const res = await api.get('/auth/me');
-            setAdmin(res.data);
-        } catch {
-            logout();
-        } finally {
-            setLoading(false);
-        }
-    };
+    const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        if (token) {
-            fetchAdmin();
-        } else {
-            setLoading(false);
-        }
+        const fetchAdmin = async () => {
+            if (!token) {
+                setIsLoading(false);
+                return;
+            }
+            try {
+                const response = await api.get<AdminUser>("/api/auth/me");
+                setAdmin(response.data);
+            } catch (err) {
+                console.error("Failed to verify token:", err);
+                localStorage.removeItem("token");
+                setToken(null);
+                setAdmin(null);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchAdmin();
     }, [token]);
 
-    const login = async (newToken: string) => {
-        localStorage.setItem('token', newToken);
-        setToken(newToken);
-        await fetchAdmin();
+    const login = async (email: string, password: string) => {
+        const response = await api.post<{ access_token: string }>("/api/auth/login", { email, password });
+        const accessToken = response.data.access_token;
+        localStorage.setItem("token", accessToken);
+        setToken(accessToken);
+
+        const meResponse = await api.get<AdminUser>("/api/auth/me", {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        setAdmin(meResponse.data);
     };
 
     const logout = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
         setToken(null);
         setAdmin(null);
     };
 
     return (
-        <AuthContext.Provider value={{ token, admin, loading, login, logout }}>
+        <AuthContext.Provider value={{ admin, token, isLoading, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
@@ -58,7 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider');
+        throw new Error("useAuth must be used within an AuthProvider");
     }
     return context;
 };
