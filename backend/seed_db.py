@@ -1,13 +1,10 @@
-import hashlib
 from datetime import date, datetime
 from app.database import SessionLocal, engine, Base
+from app.utils.security import hash_password
 from app.models import (
     AdminUser, Student, Company, PlacementDrive, PlacementStage,
     StudentRegistration, StudentStageResult, Placement, ImportLog
 )
-
-def hash_password(password: str) -> str:
-    return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
 def seed():
     db = SessionLocal()

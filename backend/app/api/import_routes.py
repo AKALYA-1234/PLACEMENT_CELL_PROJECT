@@ -2,6 +2,8 @@ from fastapi import APIRouter, File, UploadFile, Form, Depends, HTTPException, s
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.models.admin_user import AdminUser
+from app.utils.security import get_current_admin
 from app.services.excel_parser.validation_models import ImportValidationResponse
 from app.services.excel_parser.confirm_models import ImportConfirmResponse
 from app.services.excel_parser.import_validation_service import validate_excel_import
@@ -15,11 +17,12 @@ async def validate_excel_import_endpoint(
     file: UploadFile = File(...),
     company_name: str = Form(...),
     academic_year: str = Form("2025-2026"),
+    current_admin: AdminUser = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ) -> ImportValidationResponse:
     """
     Validates an uploaded Excel workbook for placement import without persisting changes to PostgreSQL.
-    Returns a comprehensive validation preview report.
+    Protected Admin Endpoint — Requires valid JWT Bearer Token.
     """
     if not file.filename or not file.filename.lower().endswith((".xlsx", ".xls")):
         raise HTTPException(
@@ -50,11 +53,12 @@ async def confirm_excel_import_endpoint(
     file: UploadFile = File(...),
     company_name: str = Form(...),
     academic_year: str = Form("2025-2026"),
+    current_admin: AdminUser = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ) -> ImportConfirmResponse:
     """
     Confirms and executes PostgreSQL database insertion for a validated Excel workbook.
-    Rejects unvalidated or malformed workbooks.
+    Protected Admin Endpoint — Requires valid JWT Bearer Token. Rejects unvalidated or malformed workbooks.
     """
     if not file.filename or not file.filename.lower().endswith((".xlsx", ".xls")):
         raise HTTPException(

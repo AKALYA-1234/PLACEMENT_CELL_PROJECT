@@ -25,9 +25,20 @@ from tests.test_import_confirm import (
     test_confirm_import_idempotency,
     test_confirm_import_unvalidated_rejection
 )
+from tests.test_auth import (
+    test_login_success,
+    test_login_invalid_password,
+    test_login_invalid_email,
+    test_get_me_success,
+    test_get_me_unauthorized,
+    test_logout_endpoint,
+    test_protected_import_validate_unauthorized,
+    test_protected_import_confirm_unauthorized,
+    test_protected_import_validate_with_token
+)
 
 def run():
-    print("=== RUNNING PHASE 4, 5, & 6 FULL TEST SUITE ===")
+    print("=== RUNNING PHASE 4, 5, 6, & 7 FULL TEST SUITE ===")
     tests = [
         ("Register Normalizer", test_register_number_normalizer),
         ("Status Normalizer", test_status_normalizer),
@@ -42,6 +53,15 @@ def run():
         ("Presidio Import Confirm API (POST /admin/import/confirm)", test_confirm_import_presidio_endpoint),
         ("Import Confirm Idempotency Test", test_confirm_import_idempotency),
         ("Unvalidated Import Rejection Test", test_confirm_import_unvalidated_rejection),
+        ("Admin Login Success", test_login_success),
+        ("Admin Login Invalid Password Rejection", test_login_invalid_password),
+        ("Admin Login Invalid Email Rejection", test_login_invalid_email),
+        ("Admin /me Endpoint Success", test_get_me_success),
+        ("Admin /me Endpoint Unauthorized Rejection", test_get_me_unauthorized),
+        ("Admin Logout Endpoint", test_logout_endpoint),
+        ("Protected Import Validate Endpoint 401 Check", test_protected_import_validate_unauthorized),
+        ("Protected Import Confirm Endpoint 401 Check", test_protected_import_confirm_unauthorized),
+        ("Protected Import Validate Endpoint Token Authorized", test_protected_import_validate_with_token),
     ]
     
     passed = 0
