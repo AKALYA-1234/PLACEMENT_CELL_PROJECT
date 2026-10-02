@@ -11,15 +11,21 @@ from tests.test_excel_parser import (
     test_parse_presidio_workbook,
     test_parse_soliton_workbook
 )
+from tests.test_db_ingestion import (
+    test_db_ingestion_presidio,
+    test_db_ingestion_soliton
+)
 
 def run():
-    print("=== RUNNING PHASE 4 EXCEL PARSER UNIT TESTS ===")
+    print("=== RUNNING PHASE 4 EXCEL PARSER & DB INGESTION TESTS ===")
     tests = [
         ("Register Normalizer", test_register_number_normalizer),
         ("Status Normalizer", test_status_normalizer),
         ("Netgear Workbook Parser", test_parse_netgear_workbook),
         ("Presidio Workbook Parser", test_parse_presidio_workbook),
         ("Soliton Workbook Parser", test_parse_soliton_workbook),
+        ("Presidio DB Ingestion Bridge", test_db_ingestion_presidio),
+        ("Soliton DB Ingestion Bridge", test_db_ingestion_soliton),
     ]
     
     passed = 0
