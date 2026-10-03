@@ -136,7 +136,7 @@ async def get_company_students_endpoint(
     current_admin: AdminUser = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ) -> dict[str, Any]:
-    """Retrieves candidates participating in or placed by drives of a specific company."""
+    """Retrieves unique candidates participating in or placed by drives of a specific company."""
     company = db.scalar(select(Company).where(Company.id == company_id))
     if not company:
         raise HTTPException(
@@ -149,15 +149,31 @@ async def get_company_students_endpoint(
         return {"items": [], "total": 0, "page": page, "limit": limit, "pages": 1}
 
     if status_filter and status_filter.upper() == "PLACED":
-        query = select(Student, Placement.package_ctc, PlacementDrive.drive_name)\
-            .join(Placement, Student.id == Placement.student_id)\
-            .join(PlacementDrive, Placement.drive_id == PlacementDrive.id)\
+        # Select unique placed students
+        subq = (
+            select(Placement.student_id, func.max(Placement.package_ctc).label("max_ctc"))
             .where(Placement.drive_id.in_(drive_ids))
+            .group_by(Placement.student_id)
+            .subquery()
+        )
+        query = (
+            select(Student, subq.c.max_ctc)
+            .join(subq, Student.id == subq.c.student_id)
+            .order_by(Student.register_number.asc())
+        )
     else:
-        query = select(Student, StudentRegistration.id, PlacementDrive.drive_name)\
-            .join(StudentRegistration, Student.id == StudentRegistration.student_id)\
-            .join(PlacementDrive, StudentRegistration.drive_id == PlacementDrive.id)\
+        # Select unique registered students
+        subq = (
+            select(StudentRegistration.student_id)
             .where(StudentRegistration.drive_id.in_(drive_ids))
+            .distinct()
+            .subquery()
+        )
+        query = (
+            select(Student)
+            .join(subq, Student.id == subq.c.student_id)
+            .order_by(Student.register_number.asc())
+        )
 
     total_query = select(func.count()).select_from(query.subquery())
     total = db.scalar(total_query) or 0
@@ -167,8 +183,12 @@ async def get_company_students_endpoint(
 
     items = []
     for row in results:
-        student = row[0]
-        drive_n = row[2]
+        if status_filter and status_filter.upper() == "PLACED":
+            student = row[0]
+            max_ctc = row[1]
+        else:
+            student = row[0]
+            max_ctc = None
 
         placement = db.scalar(
             select(Placement).where(Placement.student_id == student.id, Placement.drive_id.in_(drive_ids))
@@ -179,9 +199,9 @@ async def get_company_students_endpoint(
             "register_number": student.register_number,
             "full_name": student.full_name,
             "department": student.department,
-            "drive_name": drive_n,
+            "drive_name": company.name + " Campus Drive",
             "is_placed": placement is not None,
-            "package_ctc": placement.package_ctc if placement else None
+            "package_ctc": placement.package_ctc if placement else max_ctc
         })
 
     pages = (total + limit - 1) // limit if total > 0 else 1
