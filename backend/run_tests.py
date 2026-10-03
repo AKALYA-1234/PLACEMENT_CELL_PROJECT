@@ -54,9 +54,15 @@ from tests.test_phase11_analytics import (
     test_analytics_rounds,
     test_analytics_student_not_found
 )
+from tests.test_security_and_hardening import (
+    test_sanitize_filename,
+    test_file_size_limit_exceeded,
+    test_cors_preflight,
+    test_invalid_jwt_token_rejection
+)
 
 def run():
-    print("=== RUNNING PHASE 4 - 11 FULL TEST SUITE ===")
+    print("=== RUNNING PHASE 4 - 12 MASTER TEST SUITE ===")
 
     # Ensure admin user for auth headers
     Base.metadata.create_all(bind=engine)
@@ -108,6 +114,10 @@ def run():
         ("Phase 11: Analytics Companies Breakdown", test_analytics_companies),
         ("Phase 11: Analytics Round Funnel", test_analytics_rounds),
         ("Phase 11: Analytics Student Not Found", test_analytics_student_not_found),
+        ("Phase 12: Filename Sanitization", test_sanitize_filename),
+        ("Phase 12: Upload File Size Limit Enforcement (15MB)", test_file_size_limit_exceeded),
+        ("Phase 12: CORS Preflight Configuration", test_cors_preflight),
+        ("Phase 12: Invalid JWT Token Rejection", test_invalid_jwt_token_rejection),
     ]
 
     passed = 0

@@ -1,8 +1,11 @@
+import os
+import re
 from typing import Any, Optional
 from fastapi import APIRouter, File, UploadFile, Form, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 from sqlalchemy import select, func, or_
 
+from app.config import get_settings
 from app.database import get_db
 from app.models.admin_user import AdminUser
 from app.models import ImportLog, Company, PlacementDrive
@@ -13,6 +16,14 @@ from app.services.excel_parser.import_validation_service import validate_excel_i
 from app.services.excel_parser.import_confirm_service import confirm_excel_import
 
 router = APIRouter(prefix="/admin/import", tags=["Admin Import"])
+settings = get_settings()
+
+
+def sanitize_filename(filename: str) -> str:
+    """Sanitizes uploaded filename to prevent directory traversal or invalid characters."""
+    clean_name = os.path.basename(filename)
+    clean_name = re.sub(r"[^\w\s\.-]", "_", clean_name)
+    return clean_name or "uploaded_workbook.xlsx"
 
 
 @router.post("/validate", response_model=ImportValidationResponse)
@@ -30,16 +41,24 @@ async def validate_excel_import_endpoint(
             detail="Invalid file format. Please upload a valid Excel workbook (.xlsx or .xls)."
         )
 
+    safe_filename = sanitize_filename(file.filename)
     contents = await file.read()
+
     if not contents:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Uploaded file is empty."
         )
 
+    if len(contents) > settings.MAX_UPLOAD_SIZE_BYTES:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail=f"Uploaded file exceeds maximum allowed size limit of {settings.MAX_UPLOAD_SIZE_BYTES / (1024 * 1024):.0f} MB."
+        )
+
     return validate_excel_import(
         file_input=contents,
-        file_name=file.filename,
+        file_name=safe_filename,
         company_name=company_name,
         academic_year=academic_year,
         db=db
@@ -61,17 +80,25 @@ async def confirm_excel_import_endpoint(
             detail="Invalid file format. Please upload a valid Excel workbook (.xlsx or .xls)."
         )
 
+    safe_filename = sanitize_filename(file.filename)
     contents = await file.read()
+
     if not contents:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Uploaded file is empty."
         )
 
+    if len(contents) > settings.MAX_UPLOAD_SIZE_BYTES:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail=f"Uploaded file exceeds maximum allowed size limit of {settings.MAX_UPLOAD_SIZE_BYTES / (1024 * 1024):.0f} MB."
+        )
+
     try:
         return confirm_excel_import(
             file_input=contents,
-            file_name=file.filename,
+            file_name=safe_filename,
             company_name=company_name,
             academic_year=academic_year,
             db=db
