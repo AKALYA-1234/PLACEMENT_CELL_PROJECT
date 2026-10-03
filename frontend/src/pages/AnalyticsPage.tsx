@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../api/client";
 import { LoadingSpinner } from "../components/LoadingSpinner";
+import { StatusBadge } from "../components/StatusBadge";
 import {
     BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
     PieChart, Pie, Cell, Legend
 } from "recharts";
-import { BarChart3, PieChart as PieIcon, Layers, Building2 } from "lucide-react";
+import {
+    Users, Building2, Target, Award, Search, BarChart3,
+    PieChart as PieIcon, Layers, FileText, CheckCircle2, UserCheck
+} from "lucide-react";
 
 interface OverviewData {
+    academic_year: string;
     total_students: number;
-    total_placed: number;
-    unplaced_students: number;
-    placement_rate_percentage: number;
     total_companies: number;
+    total_drives: number;
+    total_registrations: number;
+    total_placement_records: number;
+    students_placed: number;
+    students_in_process: number;
+    students_not_placed: number;
+    placement_rate_percentage: number;
     average_ctc_lpa: number;
     highest_ctc_lpa: number;
 }
@@ -21,7 +30,8 @@ interface DeptItem {
     department: string;
     total_students: number;
     placed_students: number;
-    unplaced_students: number;
+    in_process_students: number;
+    not_placed_students: number;
     placement_rate_percentage: number;
     average_ctc_lpa: number;
 }
@@ -29,8 +39,10 @@ interface DeptItem {
 interface CompanyStat {
     company_id: number;
     company_name: string;
-    registered_candidates: number;
-    placed_candidates: number;
+    industry: string;
+    registered_students: number;
+    progression_counts: number;
+    placed_students: number;
     max_ctc_lpa: number;
 }
 
@@ -41,7 +53,22 @@ interface RoundStat {
     drop_off_count: number;
 }
 
-const COLORS = ["#6366f1", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4", "#ec4899"];
+interface StudentAnalytics {
+    register_number: string;
+    full_name: string;
+    department: string;
+    cgpa: number;
+    overall_status: string;
+    registered_companies: number;
+    progression_companies: number;
+    placed_companies: number;
+    company_breakdown: Array<{
+        drive_id: number;
+        company_name: string;
+        highest_round_reached: number;
+        status: string;
+    }>;
+}
 
 const AnalyticsPage: React.FC = () => {
     const [overview, setOverview] = useState<OverviewData | null>(null);
@@ -49,6 +76,12 @@ const AnalyticsPage: React.FC = () => {
     const [companies, setCompanies] = useState<CompanyStat[]>([]);
     const [rounds, setRounds] = useState<RoundStat[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    // Student Search state
+    const [studentRegisterNo, setStudentRegisterNo] = useState("");
+    const [studentData, setStudentData] = useState<StudentAnalytics | null>(null);
+    const [isSearchingStudent, setIsSearchingStudent] = useState(false);
+    const [studentSearchError, setStudentSearchError] = useState("");
 
     useEffect(() => {
         const fetchAnalytics = async () => {
@@ -64,7 +97,7 @@ const AnalyticsPage: React.FC = () => {
                 setCompanies(compRes.data.companies);
                 setRounds(roundRes.data.rounds);
             } catch (err) {
-                console.error("Failed to load analytics data", err);
+                console.error("Failed to load analytics", err);
             } finally {
                 setIsLoading(false);
             }
@@ -72,52 +105,97 @@ const AnalyticsPage: React.FC = () => {
         fetchAnalytics();
     }, []);
 
-    if (isLoading) return <LoadingSpinner message="Generating analytics dashboards..." />;
+    const handleStudentSearch = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!studentRegisterNo.trim()) return;
+
+        setIsSearchingStudent(true);
+        setStudentSearchError("");
+        setStudentData(null);
+
+        try {
+            const res = await api.get<StudentAnalytics>(`/admin/analytics/student/${studentRegisterNo.trim()}`);
+            setStudentData(res.data);
+        } catch (err: any) {
+            setStudentSearchError(err.response?.data?.detail || "Student analytics not found.");
+        } finally {
+            setIsSearchingStudent(false);
+        }
+    };
+
+    if (isLoading) return <LoadingSpinner message="Querying PostgreSQL analytics engine..." />;
 
     const pieData = overview
         ? [
-            { name: "Placed", value: overview.total_placed },
-            { name: "Unplaced", value: overview.unplaced_students },
+            { name: "Placed", value: overview.students_placed },
+            { name: "In Process", value: overview.students_in_process },
+            { name: "Not Placed", value: overview.students_not_placed },
         ]
         : [];
+
+    const PIE_COLORS = ["#10b981", "#f59e0b", "#334155"];
 
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-2xl font-bold text-white">Placement Analytics</h1>
-                <p className="text-sm text-slate-400 mt-0.5">Comprehensive metrics, department performance, and company insights</p>
+                <h1 className="text-2xl font-bold text-white">Placement Analytics & Metrics</h1>
+                <p className="text-sm text-slate-400 mt-0.5">
+                    Deterministic SQL aggregations across students, companies, departments, and rounds
+                </p>
             </div>
 
-            {/* KPI Row */}
+            {/* OVERALL COLLEGE METRICS KPI GRID */}
             {overview && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {[
-                        { label: "Placement Rate", value: `${overview.placement_rate_percentage}%`, color: "text-emerald-400" },
-                        { label: "Total Placed", value: overview.total_placed, color: "text-indigo-400" },
-                        { label: "Avg Package", value: `${overview.average_ctc_lpa} LPA`, color: "text-cyan-400" },
-                        { label: "Highest Package", value: `${overview.highest_ctc_lpa} LPA`, color: "text-amber-400" },
-                    ].map((item) => (
-                        <div key={item.label} className="bg-slate-900/70 border border-slate-800 rounded-xl p-4 text-center">
-                            <p className={`text-2xl font-bold ${item.color}`}>{item.value}</p>
-                            <p className="text-xs text-slate-400 mt-1">{item.label}</p>
-                        </div>
-                    ))}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-4">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">Total Students</p>
+                        <p className="text-2xl font-bold text-white mt-1">{overview.total_students}</p>
+                    </div>
+                    <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-4">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">Total Companies</p>
+                        <p className="text-2xl font-bold text-violet-400 mt-1">{overview.total_companies}</p>
+                    </div>
+                    <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-4">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">Total Registrations</p>
+                        <p className="text-2xl font-bold text-indigo-400 mt-1">{overview.total_registrations}</p>
+                    </div>
+                    <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-4">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">Students Placed</p>
+                        <p className="text-2xl font-bold text-emerald-400 mt-1">{overview.students_placed}</p>
+                    </div>
+                    <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-4">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">Students In Process</p>
+                        <p className="text-2xl font-bold text-amber-400 mt-1">{overview.students_in_process}</p>
+                    </div>
+                    <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-4">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">Students Not Placed</p>
+                        <p className="text-2xl font-bold text-rose-400 mt-1">{overview.students_not_placed}</p>
+                    </div>
+                    <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-4">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">Placement Records</p>
+                        <p className="text-2xl font-bold text-cyan-400 mt-1">{overview.total_placement_records}</p>
+                    </div>
+                    <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-4">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">Placement Rate</p>
+                        <p className="text-2xl font-bold text-emerald-300 mt-1">{overview.placement_rate_percentage}%</p>
+                    </div>
                 </div>
             )}
 
-            {/* Grid 1: Pie + Dept Bar */}
+            {/* DEPARTMENT ANALYTICS */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Placement Ratio Pie Chart */}
+                {/* Status Ratio Pie */}
                 <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-5">
                     <div className="flex items-center space-x-2 mb-4">
                         <PieIcon className="w-5 h-5 text-indigo-400" />
-                        <h2 className="text-sm font-semibold text-white">Overall Placement Status</h2>
+                        <h2 className="text-sm font-semibold text-white">College Placement Status Breakdown</h2>
                     </div>
                     <ResponsiveContainer width="100%" height={240}>
                         <PieChart>
                             <Pie data={pieData} cx="50%" cy="50%" innerRadius={60} outerRadius={85} paddingAngle={5} dataKey="value">
-                                <Cell fill="#10b981" />
-                                <Cell fill="#334155" />
+                                {pieData.map((_, idx) => (
+                                    <Cell key={idx} fill={PIE_COLORS[idx % PIE_COLORS.length]} />
+                                ))}
                             </Pie>
                             <Tooltip contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #334155", borderRadius: "8px", color: "#fff" }} />
                             <Legend verticalAlign="bottom" height={36} iconType="circle" />
@@ -125,47 +203,50 @@ const AnalyticsPage: React.FC = () => {
                     </ResponsiveContainer>
                 </div>
 
-                {/* Department Breakdown Chart */}
+                {/* Department Stacked Bar Chart */}
                 <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 lg:col-span-2">
                     <div className="flex items-center space-x-2 mb-4">
                         <BarChart3 className="w-5 h-5 text-indigo-400" />
-                        <h2 className="text-sm font-semibold text-white">Department Placement Breakdown</h2>
+                        <h2 className="text-sm font-semibold text-white">Department Placement & Progression Analytics</h2>
                     </div>
                     <ResponsiveContainer width="100%" height={240}>
                         <BarChart data={depts}>
                             <XAxis dataKey="department" tick={{ fill: "#94a3b8", fontSize: 11 }} />
                             <YAxis tick={{ fill: "#94a3b8", fontSize: 11 }} />
                             <Tooltip contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #334155", borderRadius: "8px", color: "#fff" }} />
-                            <Bar dataKey="placed_students" name="Placed" fill="#6366f1" radius={[4, 4, 0, 0]} />
-                            <Bar dataKey="unplaced_students" name="Unplaced" fill="#334155" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="placed_students" name="Placed" fill="#10b981" stackId="a" radius={[0, 0, 0, 0]} />
+                            <Bar dataKey="in_process_students" name="In Process" fill="#f59e0b" stackId="a" radius={[0, 0, 0, 0]} />
+                            <Bar dataKey="not_placed_students" name="Not Placed" fill="#334155" stackId="a" radius={[4, 4, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
             </div>
 
-            {/* Grid 2: Companies CTC & Round Funnel */}
+            {/* COMPANY ANALYTICS & ROUND FUNNELS */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Company Placement Comparison */}
+                {/* Company Candidate Participation */}
                 <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-5">
                     <div className="flex items-center space-x-2 mb-4">
                         <Building2 className="w-5 h-5 text-indigo-400" />
-                        <h2 className="text-sm font-semibold text-white">Company CTC (LPA) Comparison</h2>
+                        <h2 className="text-sm font-semibold text-white">Company Candidate Participation</h2>
                     </div>
                     <ResponsiveContainer width="100%" height={260}>
                         <BarChart data={companies}>
                             <XAxis dataKey="company_name" tick={{ fill: "#94a3b8", fontSize: 11 }} />
                             <YAxis tick={{ fill: "#94a3b8", fontSize: 11 }} />
                             <Tooltip contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #334155", borderRadius: "8px", color: "#fff" }} />
-                            <Bar dataKey="max_ctc_lpa" name="Max CTC (LPA)" fill="#10b981" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="registered_students" name="Registered" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="progression_counts" name="Progression" fill="#f59e0b" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="placed_students" name="Placed" fill="#10b981" radius={[4, 4, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
 
-                {/* Round Drop-off Funnel */}
+                {/* Round Progression & Drop-off */}
                 <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-5">
                     <div className="flex items-center space-x-2 mb-4">
                         <Layers className="w-5 h-5 text-indigo-400" />
-                        <h2 className="text-sm font-semibold text-white">Round Progression & Drop-off</h2>
+                        <h2 className="text-sm font-semibold text-white">Round Funnel Drop-off</h2>
                     </div>
                     <ResponsiveContainer width="100%" height={260}>
                         <BarChart data={rounds}>
@@ -173,10 +254,99 @@ const AnalyticsPage: React.FC = () => {
                             <YAxis tick={{ fill: "#94a3b8", fontSize: 11 }} />
                             <Tooltip contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #334155", borderRadius: "8px", color: "#fff" }} />
                             <Bar dataKey="qualified_count" name="Qualified" fill="#818cf8" radius={[4, 4, 0, 0]} />
-                            <Bar dataKey="drop_off_count" name="Dropped Off" fill="#f43f5e" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="drop_off_count" name="Drop-off" fill="#f43f5e" radius={[4, 4, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
+            </div>
+
+            {/* STUDENT ANALYTICS LIVE LOOKUP */}
+            <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-4">
+                <div className="flex items-center space-x-3">
+                    <div className="p-2.5 bg-indigo-500/10 border border-indigo-500/20 rounded-xl">
+                        <UserCheck className="w-5 h-5 text-indigo-400" />
+                    </div>
+                    <div>
+                        <h2 className="text-base font-semibold text-white">Student Analytics Lookup</h2>
+                        <p className="text-xs text-slate-400">
+                            Query registered companies, progression companies, placed companies, and highest round reached
+                        </p>
+                    </div>
+                </div>
+
+                <form onSubmit={handleStudentSearch} className="flex gap-3 max-w-md">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                        <input
+                            type="text"
+                            value={studentRegisterNo}
+                            onChange={(e) => setStudentRegisterNo(e.target.value)}
+                            placeholder="Enter Register Number (e.g. 7376221CS101)"
+                            className="w-full pl-10 pr-4 py-2 bg-slate-800/80 border border-slate-700 focus:border-indigo-500 rounded-xl text-white text-sm outline-none"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        disabled={isSearchingStudent || !studentRegisterNo.trim()}
+                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold transition-colors disabled:opacity-40"
+                    >
+                        {isSearchingStudent ? "Searching..." : "Analyze"}
+                    </button>
+                </form>
+
+                {studentSearchError && (
+                    <p className="text-xs text-rose-400">{studentSearchError}</p>
+                )}
+
+                {studentData && (
+                    <div className="space-y-4 pt-4 border-t border-slate-800">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <h3 className="text-sm font-bold text-white">{studentData.full_name}</h3>
+                                <p className="text-xs text-slate-400">{studentData.register_number} · {studentData.department} (CGPA: {studentData.cgpa})</p>
+                            </div>
+                            <StatusBadge status={studentData.overall_status} />
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-3">
+                            <div className="bg-slate-800/60 rounded-xl p-3 text-center">
+                                <p className="text-xl font-bold text-indigo-400">{studentData.registered_companies}</p>
+                                <p className="text-[10px] text-slate-400 uppercase">Registered Companies</p>
+                            </div>
+                            <div className="bg-slate-800/60 rounded-xl p-3 text-center">
+                                <p className="text-xl font-bold text-amber-400">{studentData.progression_companies}</p>
+                                <p className="text-[10px] text-slate-400 uppercase">Progression Companies</p>
+                            </div>
+                            <div className="bg-slate-800/60 rounded-xl p-3 text-center">
+                                <p className="text-xl font-bold text-emerald-400">{studentData.placed_companies}</p>
+                                <p className="text-[10px] text-slate-400 uppercase">Placed Companies</p>
+                            </div>
+                        </div>
+
+                        {studentData.company_breakdown.length > 0 && (
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-xs">
+                                    <thead className="bg-slate-800/50">
+                                        <tr>
+                                            <th className="text-left px-3 py-2 text-slate-400">Company</th>
+                                            <th className="text-center px-3 py-2 text-slate-400">Highest Round Reached</th>
+                                            <th className="text-left px-3 py-2 text-slate-400">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-800/50">
+                                        {studentData.company_breakdown.map((cb, idx) => (
+                                            <tr key={idx}>
+                                                <td className="px-3 py-2 text-white font-medium">{cb.company_name}</td>
+                                                <td className="px-3 py-2 text-center text-cyan-400 font-mono">Round {cb.highest_round_reached}</td>
+                                                <td className="px-3 py-2"><StatusBadge status={cb.status} /></td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );
