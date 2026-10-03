@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from app.database import get_db, Base, engine
-from app.models.admin_user import AdminUser
+from app.models import AdminUser, Company
 from app.utils.security import create_access_token, hash_password
 
 from tests.test_excel_parser import (
@@ -122,19 +122,28 @@ def run():
 
     passed = 0
     failed = 0
-    for name, func in tests:
-        print(f"\n--- Running: {name} ---")
-        try:
-            if "auth_header" in func.__code__.co_varnames:
-                func(auth_header=auth_hdr)
-            else:
-                func()
-            print(f"--> [PASS] {name}")
-            passed += 1
-        except Exception as e:
-            print(f"--> [FAIL] {name}: {type(e).__name__}: {e}")
-            traceback.print_exc(file=sys.stdout)
-            failed += 1
+    try:
+        for name, func in tests:
+            print(f"\n--- Running: {name} ---")
+            try:
+                if "auth_header" in func.__code__.co_varnames:
+                    func(auth_header=auth_hdr)
+                else:
+                    func()
+                print(f"--> [PASS] {name}")
+                passed += 1
+            except Exception as e:
+                print(f"--> [FAIL] {name}: {type(e).__name__}: {e}")
+                traceback.print_exc(file=sys.stdout)
+                failed += 1
+    finally:
+        # Clean up test-created dummy companies to prevent database pollution
+        test_company_names = ["Presidio Inc", "Presidio Final Drive", "Soliton Idempotent Inc", "Presidio Protected", "Large File Co"]
+        dummy_comps = db.query(Company).filter(Company.name.in_(test_company_names)).all()
+        if dummy_comps:
+            for dc in dummy_comps:
+                db.delete(dc)
+            db.commit()
 
     print(f"\n==========================================")
     print(f"Test Summary: {passed} passed, {failed} failed out of {len(tests)} tests.")
