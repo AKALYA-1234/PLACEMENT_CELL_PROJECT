@@ -10,7 +10,7 @@ export const Layout: React.FC = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+            <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center transition-colors duration-200">
                 <LoadingSpinner message="Initializing admin portal..." />
             </div>
         );
@@ -21,7 +21,7 @@ export const Layout: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-slate-950 text-white">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-200">
             <Navbar />
             <div className="flex">
                 <Sidebar />

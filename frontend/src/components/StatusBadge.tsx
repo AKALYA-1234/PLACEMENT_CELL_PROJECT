@@ -8,7 +8,7 @@ interface StatusBadgeProps {
 export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, className = "" }) => {
     const norm = status.toUpperCase();
 
-    let colorClasses = "bg-slate-800 text-slate-300 border-slate-700";
+    let colorClasses = "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700";
     if (["PLACED", "SUCCESS", "QUALIFIED"].includes(norm)) {
         colorClasses = "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
     } else if (["PARTIAL_SUCCESS", "PROGRESSION", "WARNING"].includes(norm)) {

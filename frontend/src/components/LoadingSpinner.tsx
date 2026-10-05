@@ -13,7 +13,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
     return (
         <div className={`flex flex-col items-center justify-center ${className}`}>
             <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-3" />
-            <p className="text-sm font-medium text-slate-400">{message}</p>
+            <p className="text-sm font-medium text-slate-400 dark:text-slate-500 dark:text-slate-400">{message}</p>
         </div>
     );
 };

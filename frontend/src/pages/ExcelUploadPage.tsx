@@ -83,8 +83,8 @@ const ExcelUploadPage: React.FC = () => {
     return (
         <div className="max-w-3xl mx-auto space-y-6">
             <div>
-                <h1 className="text-2xl font-bold text-white">Upload Placement Excel Workbook</h1>
-                <p className="text-sm text-slate-400 mt-0.5">
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Upload Placement Excel Workbook</h1>
+                <p className="text-sm text-slate-400 dark:text-slate-500 dark:text-slate-400 mt-0.5">
                     Ingest company drive results, student registrations, round progression, and offers.
                 </p>
             </div>
@@ -106,7 +106,7 @@ const ExcelUploadPage: React.FC = () => {
                         ? "border-indigo-500 bg-indigo-500/10"
                         : file
                             ? "border-emerald-500/50 bg-emerald-500/5"
-                            : "border-slate-800 hover:border-slate-700 bg-slate-900/60"
+                            : "border-slate-200 dark:border-slate-800 hover:border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-900/60"
                     }`}
             >
                 <input
@@ -120,8 +120,8 @@ const ExcelUploadPage: React.FC = () => {
                 {file ? (
                     <div className="flex flex-col items-center">
                         <CheckCircle2 className="w-12 h-12 text-emerald-400 mb-3 animate-bounce" />
-                        <p className="text-base font-semibold text-white">{file.name}</p>
-                        <p className="text-xs text-slate-400 mt-1">
+                        <p className="text-base font-semibold text-slate-900 dark:text-white">{file.name}</p>
+                        <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 mt-1">
                             {(file.size / 1024).toFixed(1)} KB — Click to change file
                         </p>
                         <button
@@ -137,18 +137,18 @@ const ExcelUploadPage: React.FC = () => {
                         <div className="p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl mb-3">
                             <FileSpreadsheet className="w-8 h-8 text-indigo-400" />
                         </div>
-                        <p className="text-base font-semibold text-slate-200">
+                        <p className="text-base font-semibold text-slate-800 dark:text-slate-200">
                             Drag & Drop your Excel workbook here, or click to browse
                         </p>
-                        <p className="text-xs text-slate-500 mt-1">Accepts .xlsx and .xls formats</p>
+                        <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Accepts .xlsx and .xls formats</p>
                     </div>
                 )}
             </div>
 
             {/* Inputs Card */}
-            <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 space-y-4">
+            <div className="bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4">
                 <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider flex items-center space-x-1.5">
+                    <label className="block text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider flex items-center space-x-1.5">
                         <Building2 className="w-3.5 h-3.5 text-indigo-400" />
                         <span>Company Name *</span>
                     </label>
@@ -157,19 +157,19 @@ const ExcelUploadPage: React.FC = () => {
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
                         placeholder="e.g. Presidio, Netgear, Soliton"
-                        className="w-full px-4 py-2.5 bg-slate-800/80 border border-slate-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 rounded-xl text-white text-sm placeholder-slate-500 outline-none transition-all"
+                        className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 rounded-xl text-slate-900 dark:text-white text-sm placeholder-slate-500 outline-none transition-all"
                     />
 
                     {/* Quick Select Buttons from existing companies */}
                     {existingCompanies.length > 0 && (
                         <div className="mt-2.5 flex flex-wrap gap-1.5 items-center">
-                            <span className="text-[11px] text-slate-500 mr-1">Select existing:</span>
+                            <span className="text-[11px] text-slate-400 dark:text-slate-500 mr-1">Select existing:</span>
                             {existingCompanies.slice(0, 6).map((c) => (
                                 <button
                                     key={c.id}
                                     type="button"
                                     onClick={() => setCompanyName(c.name)}
-                                    className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs transition-colors border border-slate-700/60"
+                                    className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg text-xs transition-colors border border-slate-200 dark:border-slate-700/60"
                                 >
                                     {c.name}
                                 </button>
@@ -179,14 +179,14 @@ const ExcelUploadPage: React.FC = () => {
                 </div>
 
                 <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider flex items-center space-x-1.5">
+                    <label className="block text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider flex items-center space-x-1.5">
                         <Calendar className="w-3.5 h-3.5 text-indigo-400" />
                         <span>Academic Year</span>
                     </label>
                     <select
                         value={academicYear}
                         onChange={(e) => setAcademicYear(e.target.value)}
-                        className="w-full px-4 py-2.5 bg-slate-800/80 border border-slate-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 rounded-xl text-white text-sm outline-none transition-all"
+                        className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 rounded-xl text-slate-900 dark:text-white text-sm outline-none transition-all"
                     >
                         <option value="2025-2026">2025-2026</option>
                         <option value="2024-2025">2024-2025</option>
@@ -199,7 +199,7 @@ const ExcelUploadPage: React.FC = () => {
             <button
                 onClick={handleValidate}
                 disabled={isLoading || !file || !companyName.trim()}
-                className="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/25 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center space-x-2 text-sm"
+                className="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-slate-900 dark:text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/25 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center space-x-2 text-sm"
             >
                 {isLoading ? (
                     <>

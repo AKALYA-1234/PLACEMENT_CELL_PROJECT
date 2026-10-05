@@ -1,7 +1,7 @@
 from typing import Any, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
-from sqlalchemy import select, func, or_, desc, asc
+from sqlalchemy import select, func, or_, desc, asc, nulls_last
 
 from app.database import get_db
 from app.models.admin_user import AdminUser
@@ -53,11 +53,17 @@ async def list_students_endpoint(
     total = db.scalar(total_query) or 0
 
     # Sorting
-    sort_col = getattr(Student, sort_by, Student.register_number)
+    sort_columns = {
+        "register_number": Student.register_number,
+        "full_name": Student.full_name,
+        "cgpa": Student.cgpa,
+        "department": Student.department,
+    }
+    sort_col = sort_columns.get(sort_by, Student.register_number)
     if order.lower() == "desc":
-        query = query.order_by(desc(sort_col))
+        query = query.order_by(nulls_last(desc(sort_col)), desc(Student.register_number))
     else:
-        query = query.order_by(asc(sort_col))
+        query = query.order_by(nulls_last(asc(sort_col)), asc(Student.register_number))
 
     # Pagination
     offset = (page - 1) * limit

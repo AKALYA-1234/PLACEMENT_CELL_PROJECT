@@ -51,17 +51,17 @@ const ImportHistoryPage: React.FC = () => {
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-white">Import History</h1>
-                    <p className="text-sm text-slate-400 mt-0.5">{total} import records found</p>
+                    <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Import History</h1>
+                    <p className="text-sm text-slate-400 dark:text-slate-500 dark:text-slate-400 mt-0.5">{total} import records found</p>
                 </div>
                 <form onSubmit={handleSearch} className="relative max-w-xs w-full">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500" />
                     <input
                         type="text"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         placeholder="Search by filename…"
-                        className="w-full pl-10 pr-4 py-2 bg-slate-800/80 border border-slate-700 focus:border-indigo-500 rounded-xl text-white text-sm placeholder-slate-500 outline-none"
+                        className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 focus:border-indigo-500 rounded-xl text-slate-900 dark:text-white text-sm placeholder-slate-500 outline-none"
                     />
                 </form>
             </div>
@@ -73,41 +73,41 @@ const ImportHistoryPage: React.FC = () => {
             ) : imports.length === 0 ? (
                 <EmptyState title="No imports found" description="Upload an Excel workbook to get started." icon={<History className="w-8 h-8 text-indigo-400" />} />
             ) : (
-                <div className="bg-slate-900/70 border border-slate-800 rounded-2xl overflow-hidden">
+                <div className="bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
-                            <thead className="bg-slate-800/50">
+                            <thead className="bg-slate-100 dark:bg-slate-800/50">
                                 <tr>
-                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 uppercase">ID</th>
-                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Filename</th>
-                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Company</th>
-                                    <th className="text-right px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Total</th>
-                                    <th className="text-right px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Imported</th>
-                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Status</th>
-                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 uppercase">Date</th>
+                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">ID</th>
+                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">Filename</th>
+                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">Company</th>
+                                    <th className="text-right px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">Total</th>
+                                    <th className="text-right px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">Imported</th>
+                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">Status</th>
+                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">Date</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-slate-800/50">
+                            <tbody className="divide-y divide-slate-200 dark:divide-slate-800/50">
                                 {imports.map((item) => (
-                                    <tr key={item.id} className="hover:bg-slate-800/30 transition-colors">
-                                        <td className="px-4 py-3 text-slate-400">#{item.id}</td>
-                                        <td className="px-4 py-3 text-white font-medium">{item.filename}</td>
-                                        <td className="px-4 py-3 text-slate-300">{item.company_name}</td>
-                                        <td className="px-4 py-3 text-right text-slate-300">{item.total_rows}</td>
+                                    <tr key={item.id} className="hover:bg-slate-100 dark:bg-slate-800/30 transition-colors">
+                                        <td className="px-4 py-3 text-slate-400 dark:text-slate-500 dark:text-slate-400">#{item.id}</td>
+                                        <td className="px-4 py-3 text-slate-900 dark:text-white font-medium">{item.filename}</td>
+                                        <td className="px-4 py-3 text-slate-700 dark:text-slate-300">{item.company_name}</td>
+                                        <td className="px-4 py-3 text-right text-slate-700 dark:text-slate-300">{item.total_rows}</td>
                                         <td className="px-4 py-3 text-right text-emerald-400">{item.imported_rows}</td>
                                         <td className="px-4 py-3"><StatusBadge status={item.status || "UNKNOWN"} /></td>
-                                        <td className="px-4 py-3 text-slate-400 text-xs">{item.imported_at ? new Date(item.imported_at).toLocaleDateString() : "—"}</td>
+                                        <td className="px-4 py-3 text-slate-400 dark:text-slate-500 dark:text-slate-400 text-xs">{item.imported_at ? new Date(item.imported_at).toLocaleDateString() : "—"}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
                     {/* Pagination */}
-                    <div className="flex items-center justify-between px-4 py-3 border-t border-slate-800">
-                        <p className="text-xs text-slate-500">Page {page} of {pages}</p>
+                    <div className="flex items-center justify-between px-4 py-3 border-t border-slate-200 dark:border-slate-800">
+                        <p className="text-xs text-slate-400 dark:text-slate-500">Page {page} of {pages}</p>
                         <div className="flex space-x-2">
-                            <button onClick={() => setPage(Math.max(1, page - 1))} disabled={page <= 1} className="p-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg disabled:opacity-30 transition-colors"><ChevronLeft className="w-4 h-4 text-slate-300" /></button>
-                            <button onClick={() => setPage(Math.min(pages, page + 1))} disabled={page >= pages} className="p-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg disabled:opacity-30 transition-colors"><ChevronRight className="w-4 h-4 text-slate-300" /></button>
+                            <button onClick={() => setPage(Math.max(1, page - 1))} disabled={page <= 1} className="p-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg disabled:opacity-30 transition-colors"><ChevronLeft className="w-4 h-4 text-slate-700 dark:text-slate-300" /></button>
+                            <button onClick={() => setPage(Math.min(pages, page + 1))} disabled={page >= pages} className="p-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg disabled:opacity-30 transition-colors"><ChevronRight className="w-4 h-4 text-slate-700 dark:text-slate-300" /></button>
                         </div>
                     </div>
                 </div>

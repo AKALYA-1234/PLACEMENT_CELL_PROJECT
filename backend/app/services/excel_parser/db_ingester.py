@@ -8,8 +8,17 @@ from app.models import (
     StudentRegistration, StudentStageResult, Placement, ImportLog
 )
 from app.services.excel_parser.parser_models import ParsedWorkbook, SheetCategory
+from app.services.excel_parser.department_decoder import decode_department_from_register
 
 logger = logging.getLogger(__name__)
+
+
+def _resolve_department(rec_department, register_number) -> str:
+    """Return department from the record, or decode it from the register number, or fall back to 'General'."""
+    if rec_department and rec_department.strip():
+        return rec_department.strip()
+    decoded = decode_department_from_register(register_number or "")
+    return decoded if decoded else "General"
 
 
 def ingest_parsed_workbook(
@@ -71,11 +80,12 @@ def ingest_parsed_workbook(
 
                 # Get or Create Student
                 student = db.scalar(select(Student).where(Student.register_number == rec.register_number))
+                resolved_dept = _resolve_department(rec.department, rec.register_number)
                 if not student:
                     student = Student(
                         register_number=rec.register_number,
                         full_name=rec.student_name or "Unknown Candidate",
-                        department=rec.department or "General",
+                        department=resolved_dept,
                         academic_year=academic_year
                     )
                     db.add(student)
@@ -83,8 +93,8 @@ def ingest_parsed_workbook(
                 else:
                     if rec.student_name and student.full_name == "Unknown Candidate":
                         student.full_name = rec.student_name
-                    if rec.department and student.department == "General":
-                        student.department = rec.department
+                    if student.department == "General" and resolved_dept != "General":
+                        student.department = resolved_dept
 
                 # Get or Create Registration
                 reg = db.scalar(
@@ -130,15 +140,18 @@ def ingest_parsed_workbook(
 
                 # Fetch or create student
                 student = db.scalar(select(Student).where(Student.register_number == rec.register_number))
+                resolved_dept = _resolve_department(rec.department, rec.register_number)
                 if not student:
                     student = Student(
                         register_number=rec.register_number,
                         full_name=rec.student_name or "Unknown Candidate",
-                        department=rec.department or "General",
+                        department=resolved_dept,
                         academic_year=academic_year
                     )
                     db.add(student)
                     db.flush()
+                elif student.department == "General" and resolved_dept != "General":
+                    student.department = resolved_dept
 
                 # Register student if not registered
                 reg = db.scalar(

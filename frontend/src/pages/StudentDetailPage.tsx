@@ -67,19 +67,19 @@ const StudentDetailPage: React.FC = () => {
 
     return (
         <div className="max-w-4xl mx-auto space-y-6">
-            <button onClick={() => navigate(-1)} className="flex items-center space-x-1 text-sm text-slate-400 hover:text-white transition-colors">
+            <button onClick={() => navigate(-1)} className="flex items-center space-x-1 text-sm text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
                 <ArrowLeft className="w-4 h-4" /><span>Back to Students</span>
             </button>
 
             {/* Profile Card */}
-            <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-6">
+            <div className="bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
                 <div className="flex items-start justify-between">
                     <div className="flex items-center space-x-4">
                         <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                            <User className="w-7 h-7 text-white" />
+                            <User className="w-7 h-7 text-slate-900 dark:text-white" />
                         </div>
                         <div>
-                            <h1 className="text-xl font-bold text-white">{student.full_name}</h1>
+                            <h1 className="text-xl font-bold text-slate-900 dark:text-white">{student.full_name}</h1>
                             <p className="text-xs font-mono text-indigo-400 mt-0.5">{student.register_number}</p>
                         </div>
                     </div>
@@ -97,8 +97,8 @@ const StudentDetailPage: React.FC = () => {
                         { label: "Academic Year", value: student.academic_year || "—" },
                     ].map((item) => (
                         <div key={item.label}>
-                            <p className="text-xs text-slate-500 uppercase tracking-wider">{item.label}</p>
-                            <p className="text-sm font-medium text-white mt-0.5 truncate">{item.value}</p>
+                            <p className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider">{item.label}</p>
+                            <p className="text-sm font-medium text-slate-900 dark:text-white mt-0.5 truncate">{item.value}</p>
                         </div>
                     ))}
                 </div>
@@ -112,29 +112,29 @@ const StudentDetailPage: React.FC = () => {
                     { label: "Placed Companies", value: placedCompanies, color: "text-emerald-400" },
                     { label: "Highest Round", value: highestRound, color: "text-cyan-400" },
                 ].map((kpi) => (
-                    <div key={kpi.label} className="bg-slate-900/70 border border-slate-800 rounded-xl p-4 text-center">
+                    <div key={kpi.label} className="bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-center">
                         <p className={`text-2xl font-bold ${kpi.color}`}>{kpi.value}</p>
-                        <p className="text-xs text-slate-400 mt-1">{kpi.label}</p>
+                        <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 mt-1">{kpi.label}</p>
                     </div>
                 ))}
             </div>
 
             {/* Company-wise Drives */}
             <div className="space-y-4">
-                <h2 className="text-base font-semibold text-white flex items-center space-x-2">
+                <h2 className="text-base font-semibold text-slate-900 dark:text-white flex items-center space-x-2">
                     <Building2 className="w-4 h-4 text-indigo-400" />
                     <span>Company-wise Status</span>
                 </h2>
 
                 {student.drives_history.length === 0 ? (
-                    <p className="text-sm text-slate-400">No drive registrations found.</p>
+                    <p className="text-sm text-slate-400 dark:text-slate-500 dark:text-slate-400">No drive registrations found.</p>
                 ) : (
                     student.drives_history.map((drive) => (
-                        <div key={drive.drive_id} className="bg-slate-900/70 border border-slate-800 rounded-xl p-5">
+                        <div key={drive.drive_id} className="bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
                             <div className="flex items-center justify-between mb-3">
                                 <div>
-                                    <h3 className="text-sm font-semibold text-white">{drive.company_name}</h3>
-                                    <p className="text-xs text-slate-400">{drive.drive_name} · {drive.academic_year}</p>
+                                    <h3 className="text-sm font-semibold text-slate-900 dark:text-white">{drive.company_name}</h3>
+                                    <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">{drive.drive_name} · {drive.academic_year}</p>
                                 </div>
                                 {drive.placement ? (
                                     <StatusBadge status={drive.placement.status} />
@@ -147,9 +147,9 @@ const StudentDetailPage: React.FC = () => {
                             {drive.stage_results.length > 0 && (
                                 <div className="flex flex-wrap gap-2 mt-2">
                                     {drive.stage_results.map((sr, i) => (
-                                        <div key={i} className="flex items-center space-x-1.5 bg-slate-800/60 px-2.5 py-1 rounded-lg border border-slate-700/40">
-                                            <span className="text-xs text-slate-400">R{sr.stage_order}:</span>
-                                            <span className="text-xs font-medium text-slate-300">{sr.stage_name}</span>
+                                        <div key={i} className="flex items-center space-x-1.5 bg-white dark:bg-slate-800/60 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700/40">
+                                            <span className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">R{sr.stage_order}:</span>
+                                            <span className="text-xs font-medium text-slate-700 dark:text-slate-300">{sr.stage_name}</span>
                                             <StatusBadge status={sr.status} className="text-[10px] px-1.5 py-0" />
                                         </div>
                                     ))}

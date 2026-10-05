@@ -1,7 +1,7 @@
 from typing import Any, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
-from sqlalchemy import select, func, or_
+from sqlalchemy import select, func, or_, exists, not_
 
 from app.database import get_db
 from app.models.admin_user import AdminUser
@@ -16,6 +16,11 @@ async def list_companies_endpoint(
     page: int = Query(1, ge=1, description="Page number"),
     limit: int = Query(10, ge=1, le=100, description="Items per page"),
     search: Optional[str] = Query(None, description="Search by company name or industry"),
+    placement_status: Optional[str] = Query(None, alias="status", description="Filter: PLACED, NON_PLACED, or REGISTERED"),
+    department: Optional[str] = Query(None, description="Filter by participating student department"),
+    round_name: Optional[str] = Query(None, description="Filter by placement round/stage name"),
+    academic_year: Optional[str] = Query(None, description="Filter by drive academic year"),
+    industry: Optional[str] = Query(None, description="Filter by industry"),
     current_admin: AdminUser = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ) -> dict[str, Any]:
@@ -28,6 +33,61 @@ async def list_companies_endpoint(
                 Company.industry.ilike(f"%{search}%")
             )
         )
+
+    if industry:
+        query = query.where(Company.industry.ilike(f"%{industry}%"))
+
+    company_drives = select(PlacementDrive.id).where(PlacementDrive.company_id == Company.id)
+    registered_exists = exists(
+        select(StudentRegistration.id).where(StudentRegistration.drive_id.in_(company_drives))
+    )
+    placed_exists = exists(
+        select(Placement.id).where(Placement.drive_id.in_(company_drives))
+    )
+
+    if academic_year:
+        query = query.where(
+            exists(
+                select(PlacementDrive.id).where(
+                    PlacementDrive.company_id == Company.id,
+                    PlacementDrive.academic_year == academic_year,
+                )
+            )
+        )
+
+    if department:
+        query = query.where(
+            exists(
+                select(StudentRegistration.id)
+                .join(Student, Student.id == StudentRegistration.student_id)
+                .join(PlacementDrive, PlacementDrive.id == StudentRegistration.drive_id)
+                .where(
+                    PlacementDrive.company_id == Company.id,
+                    Student.department == department,
+                )
+            )
+        )
+
+    if round_name:
+        query = query.where(
+            exists(
+                select(PlacementStage.id)
+                .join(PlacementDrive, PlacementDrive.id == PlacementStage.drive_id)
+                .where(
+                    PlacementDrive.company_id == Company.id,
+                    PlacementStage.stage_name == round_name,
+                )
+            )
+        )
+
+    if placement_status:
+        normalized_status = placement_status.upper()
+        if normalized_status == "PLACED":
+            query = query.where(placed_exists)
+        elif normalized_status == "REGISTERED":
+            query = query.where(registered_exists)
+        elif normalized_status in ("NON_PLACED", "NOT_PLACED", "UNPLACED"):
+            query = query.where(registered_exists, not_(placed_exists))
 
     total_query = select(func.count()).select_from(query.subquery())
     total = db.scalar(total_query) or 0
@@ -71,7 +131,27 @@ async def list_companies_endpoint(
         "total": total,
         "page": page,
         "limit": limit,
-        "pages": pages
+        "pages": pages,
+        "filter_options": {
+            "departments": db.scalars(
+                select(Student.department)
+                .where(Student.department.is_not(None), Student.department != "")
+                .distinct()
+                .order_by(Student.department.asc())
+            ).all(),
+            "rounds": db.scalars(
+                select(PlacementStage.stage_name)
+                .where(PlacementStage.stage_name.is_not(None), PlacementStage.stage_name != "")
+                .distinct()
+                .order_by(PlacementStage.stage_name.asc())
+            ).all(),
+            "academic_years": db.scalars(
+                select(PlacementDrive.academic_year)
+                .where(PlacementDrive.academic_year.is_not(None), PlacementDrive.academic_year != "")
+                .distinct()
+                .order_by(PlacementDrive.academic_year.desc())
+            ).all(),
+        }
     }
 
 

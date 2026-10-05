@@ -10,3 +10,5 @@ backend/test_out.txt
 .venv/
 env/
 venv/
+node_modules/
+frontend/dist/

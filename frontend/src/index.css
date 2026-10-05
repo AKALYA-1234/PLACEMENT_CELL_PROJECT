@@ -4,7 +4,8 @@
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white;
+    @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white transition-colors duration-200;
+    @apply dark:bg-slate-950 dark:text-slate-100;
   }
 }
 
@@ -14,12 +15,11 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  @apply bg-slate-100 dark:bg-slate-950;
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 4px;
+  @apply bg-slate-300 dark:bg-slate-700 rounded;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  @apply bg-slate-400 dark:bg-slate-600;
 }
