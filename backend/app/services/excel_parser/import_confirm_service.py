@@ -53,8 +53,9 @@ def confirm_excel_import(
         )
 
         if not validation_res.is_valid_for_import:
-            raise ValueError(
-                f"Cannot confirm import: workbook contains {len(validation_res.invalid_register_numbers)} malformed register numbers."
+            logger.warning(
+                "Workbook contains %d malformed register numbers – they will be skipped during import.",
+                len(validation_res.invalid_register_numbers),
             )
 
         parsed_wb: ParsedWorkbook = parse_excel_workbook(file_to_parse)

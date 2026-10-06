@@ -29,7 +29,7 @@ export const Sidebar: React.FC = () => {
                         className={({ isActive }) =>
                             `flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${isActive
                                 ? "bg-indigo-50 dark:bg-indigo-600/15 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/20 shadow-sm shadow-indigo-500/5"
-                                : "text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-50 dark:bg-slate-800/80 border border-transparent"
+                                : "text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/80 border border-transparent"
                             }`
                         }
                     >
@@ -42,7 +42,7 @@ export const Sidebar: React.FC = () => {
             <div className="mt-auto pt-4 border-t border-slate-200 dark:border-slate-800/60">
                 <div className="bg-gradient-to-r from-indigo-50 dark:from-indigo-600/10 to-purple-50 dark:to-purple-600/10 border border-indigo-100 dark:border-indigo-500/15 rounded-xl p-3">
                     <p className="text-xs text-indigo-700 dark:text-indigo-300 font-semibold">Admin Portal v1.0</p>
-                    <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">Placement Cell System</p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Placement Cell System</p>
                 </div>
             </div>
         </aside>

@@ -11,6 +11,32 @@ from app.utils.security import get_current_admin
 router = APIRouter(prefix="/admin/students", tags=["Admin Students"])
 
 
+DEPARTMENT_MAPPINGS: dict[str, list[str]] = {
+    "IT": ["Information Technology", "Information Science", "IT"],
+    "CSE": ["Computer Science", "CSE"],
+    "ECE": ["Electronics and Communication", "ECE"],
+    "EEE": ["Electrical and Electronics", "EEE"],
+    "MECH": ["Mechanical Engineering", "MECH"],
+    "CIVIL": ["Civil Engineering", "CIVIL"],
+    "AIDS": ["Artificial Intelligence", "AIDS"],
+    "AIML": ["Machine Learning", "AIML"],
+    "BM": ["Biomedical", "BM"],
+    "BME": ["Biomedical", "BME"]
+}
+
+@router.get("/departments")
+async def list_student_departments_endpoint(
+    current_admin: AdminUser = Depends(get_current_admin),
+    db: Session = Depends(get_db)
+) -> dict[str, Any]:
+    """Retrieves all distinct department names present in the student database."""
+    depts = db.scalars(
+        select(Student.department).where(Student.department.is_not(None)).distinct()
+    ).all()
+    clean_depts = sorted([d for d in depts if d and d.strip()])
+    return {"departments": clean_depts}
+
+
 @router.get("")
 async def list_students_endpoint(
     page: int = Query(1, ge=1, description="Page number"),
@@ -35,8 +61,15 @@ async def list_students_endpoint(
             )
         )
 
-    if department:
-        query = query.where(Student.department == department)
+    if department and department.strip():
+        dept_str = department.strip()
+        dept_upper = dept_str.upper()
+        if dept_upper in DEPARTMENT_MAPPINGS:
+            matched_terms = DEPARTMENT_MAPPINGS[dept_upper]
+            conditions = [Student.department.ilike(f"%{term}%") for term in matched_terms]
+            query = query.where(or_(*conditions))
+        else:
+            query = query.where(Student.department.ilike(f"%{dept_str}%"))
 
     if academic_year:
         query = query.where(Student.academic_year == academic_year)

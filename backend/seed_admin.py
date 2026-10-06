@@ -17,21 +17,22 @@ from app.models.admin_user import AdminUser
 from app.utils.security import hash_password
 
 
-def seed_admin(username: str = "admin", password: str = "admin123"):
+def seed_admin(email: str = "admin@college.edu", password: str = "admin123", full_name: str = "Admin"):
     db = SessionLocal()
     try:
-        existing = db.query(AdminUser).filter(AdminUser.username == username).first()
+        existing = db.query(AdminUser).filter(AdminUser.email == email).first()
         if existing:
-            print(f"Admin user '{username}' already exists. Skipping.")
+            print(f"Admin user '{email}' already exists. Skipping.")
             return
 
         admin = AdminUser(
-            username=username,
-            hashed_password=hash_password(password),
+            email=email,
+            password_hash=hash_password(password),
+            full_name=full_name,
         )
         db.add(admin)
         db.commit()
-        print(f"Admin user '{username}' created successfully.")
+        print(f"Admin user '{email}' created successfully.")
     except Exception as e:
         db.rollback()
         print(f"Error creating admin user: {e}")

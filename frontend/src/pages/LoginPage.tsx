@@ -39,10 +39,10 @@ const LoginPage: React.FC = () => {
                 {/* Header */}
                 <div className="text-center mb-8">
                     <div className="inline-flex p-4 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl shadow-2xl shadow-indigo-500/30 mb-4">
-                        <ShieldCheck className="w-8 h-8 text-slate-900 dark:text-white" />
+                        <ShieldCheck className="w-8 h-8 text-white" />
                     </div>
                     <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Placement Cell Portal</h1>
-                    <p className="text-sm text-slate-400 dark:text-slate-500 dark:text-slate-400 mt-1">Administrative Management & Analytics</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Administrative Management & Analytics</p>
                 </div>
 
                 {/* Login Card */}
@@ -58,11 +58,11 @@ const LoginPage: React.FC = () => {
 
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div>
-                            <label className="block text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
+                            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5 uppercase tracking-wider">
                                 Email Address
                             </label>
                             <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500" />
+                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500" />
                                 <input
                                     type="email"
                                     value={email}
@@ -75,11 +75,11 @@ const LoginPage: React.FC = () => {
                         </div>
 
                         <div>
-                            <label className="block text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
+                            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5 uppercase tracking-wider">
                                 Password
                             </label>
                             <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500" />
+                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500" />
                                 <input
                                     type="password"
                                     value={password}
@@ -94,7 +94,7 @@ const LoginPage: React.FC = () => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-slate-900 dark:text-white font-semibold rounded-xl transition-all shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/40 disabled:opacity-60 flex items-center justify-center space-x-2"
+                            className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/40 disabled:opacity-60 flex items-center justify-center space-x-2"
                         >
                             {isLoading ? (
                                 <>
@@ -108,7 +108,7 @@ const LoginPage: React.FC = () => {
                     </form>
                 </div>
 
-                <p className="text-center text-xs text-slate-400 dark:text-slate-500 dark:text-slate-600 mt-6">
+                <p className="text-center text-xs text-slate-500 dark:text-slate-400 mt-6">
                     Authorized personnel only. Unauthorized access is prohibited.
                 </p>
             </div>

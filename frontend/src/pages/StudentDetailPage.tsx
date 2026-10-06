@@ -56,7 +56,7 @@ const StudentDetailPage: React.FC = () => {
     if (!student) return null;
 
     const registeredCompanies = student.drives_history.length;
-    const progressionCompanies = student.drives_history.filter(d => d.stage_results.length > 0 && !d.placement).length;
+    const unplacedCompanies = student.drives_history.filter(d => !d.placement).length;
     const placedCompanies = student.drives_history.filter(d => d.placement !== null).length;
 
     const highestRound = student.drives_history.reduce((max, d) => {
@@ -67,7 +67,7 @@ const StudentDetailPage: React.FC = () => {
 
     return (
         <div className="max-w-4xl mx-auto space-y-6">
-            <button onClick={() => navigate(-1)} className="flex items-center space-x-1 text-sm text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
+            <button onClick={() => navigate(-1)} className="flex items-center space-x-1 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                 <ArrowLeft className="w-4 h-4" /><span>Back to Students</span>
             </button>
 
@@ -76,11 +76,11 @@ const StudentDetailPage: React.FC = () => {
                 <div className="flex items-start justify-between">
                     <div className="flex items-center space-x-4">
                         <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                            <User className="w-7 h-7 text-slate-900 dark:text-white" />
+                            <User className="w-7 h-7 text-white" />
                         </div>
                         <div>
                             <h1 className="text-xl font-bold text-slate-900 dark:text-white">{student.full_name}</h1>
-                            <p className="text-xs font-mono text-indigo-400 mt-0.5">{student.register_number}</p>
+                            <p className="text-xs font-mono text-indigo-600 dark:text-indigo-400 font-semibold mt-0.5">{student.register_number}</p>
                         </div>
                     </div>
                     <StatusBadge status={student.is_placed ? "PLACED" : "UNPLACED"} />
@@ -97,7 +97,7 @@ const StudentDetailPage: React.FC = () => {
                         { label: "Academic Year", value: student.academic_year || "—" },
                     ].map((item) => (
                         <div key={item.label}>
-                            <p className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider">{item.label}</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400 uppercase tracking-wider font-semibold">{item.label}</p>
                             <p className="text-sm font-medium text-slate-900 dark:text-white mt-0.5 truncate">{item.value}</p>
                         </div>
                     ))}
@@ -107,14 +107,14 @@ const StudentDetailPage: React.FC = () => {
             {/* KPI Mini Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
-                    { label: "Registered Companies", value: registeredCompanies, color: "text-indigo-400" },
-                    { label: "In Progression", value: progressionCompanies, color: "text-amber-400" },
-                    { label: "Placed Companies", value: placedCompanies, color: "text-emerald-400" },
-                    { label: "Highest Round", value: highestRound, color: "text-cyan-400" },
+                    { label: "Registered Companies", value: registeredCompanies, color: "text-indigo-600 dark:text-indigo-400" },
+                    { label: "Unplaced Drives", value: unplacedCompanies, color: "text-rose-600 dark:text-rose-400" },
+                    { label: "Placed Companies", value: placedCompanies, color: "text-emerald-600 dark:text-emerald-400" },
+                    { label: "Highest Round", value: highestRound, color: "text-cyan-600 dark:text-cyan-400" },
                 ].map((kpi) => (
                     <div key={kpi.label} className="bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-center">
                         <p className={`text-2xl font-bold ${kpi.color}`}>{kpi.value}</p>
-                        <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 mt-1">{kpi.label}</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 font-medium mt-1">{kpi.label}</p>
                     </div>
                 ))}
             </div>
@@ -122,19 +122,19 @@ const StudentDetailPage: React.FC = () => {
             {/* Company-wise Drives */}
             <div className="space-y-4">
                 <h2 className="text-base font-semibold text-slate-900 dark:text-white flex items-center space-x-2">
-                    <Building2 className="w-4 h-4 text-indigo-400" />
+                    <Building2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     <span>Company-wise Status</span>
                 </h2>
 
                 {student.drives_history.length === 0 ? (
-                    <p className="text-sm text-slate-400 dark:text-slate-500 dark:text-slate-400">No drive registrations found.</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">No drive registrations found.</p>
                 ) : (
                     student.drives_history.map((drive) => (
                         <div key={drive.drive_id} className="bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
                             <div className="flex items-center justify-between mb-3">
                                 <div>
                                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white">{drive.company_name}</h3>
-                                    <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">{drive.drive_name} · {drive.academic_year}</p>
+                                    <p className="text-xs text-slate-600 dark:text-slate-400">{drive.drive_name} · {drive.academic_year}</p>
                                 </div>
                                 {drive.placement ? (
                                     <StatusBadge status={drive.placement.status} />
@@ -147,9 +147,9 @@ const StudentDetailPage: React.FC = () => {
                             {drive.stage_results.length > 0 && (
                                 <div className="flex flex-wrap gap-2 mt-2">
                                     {drive.stage_results.map((sr, i) => (
-                                        <div key={i} className="flex items-center space-x-1.5 bg-white dark:bg-slate-800/60 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700/40">
-                                            <span className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">R{sr.stage_order}:</span>
-                                            <span className="text-xs font-medium text-slate-700 dark:text-slate-300">{sr.stage_name}</span>
+                                        <div key={i} className="flex items-center space-x-1.5 bg-slate-50 dark:bg-slate-800/60 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700/40">
+                                            <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">R{sr.stage_order}:</span>
+                                            <span className="text-xs font-medium text-slate-800 dark:text-slate-200">{sr.stage_name}</span>
                                             <StatusBadge status={sr.status} className="text-[10px] px-1.5 py-0" />
                                         </div>
                                     ))}

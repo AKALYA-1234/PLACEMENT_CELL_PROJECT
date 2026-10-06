@@ -48,7 +48,6 @@ async def get_analytics_overview_endpoint(
         select(func.count(distinct(StudentRegistration.student_id)))
     ) or 0
 
-    students_in_process = max(0, registered_students - students_placed)
     students_not_placed = max(0, total_students - students_placed)
     placement_rate = round((students_placed / total_students * 100), 2) if total_students > 0 else 0.0
 
@@ -66,8 +65,9 @@ async def get_analytics_overview_endpoint(
         "total_registrations": total_registrations,
         "total_placement_records": total_placement_records,
         "students_placed": students_placed,
-        "students_in_process": students_in_process,
+        "total_placed": students_placed,
         "students_not_placed": students_not_placed,
+        "unplaced_students": students_not_placed,
         "placement_rate_percentage": placement_rate,
         "average_ctc_lpa": avg_ctc,
         "highest_ctc_lpa": highest_ctc
@@ -112,7 +112,6 @@ async def get_analytics_departments_endpoint(
 
         placed_st = db.scalar(pl_query) or 0
         reg_st = db.scalar(reg_query) or 0
-        in_process_st = max(0, reg_st - placed_st)
         not_placed_st = max(0, total_st - placed_st)
         rate = round((placed_st / total_st * 100), 2) if total_st > 0 else 0.0
 
@@ -123,7 +122,6 @@ async def get_analytics_departments_endpoint(
             "department": dept_name,
             "total_students": total_st,
             "placed_students": placed_st,
-            "in_process_students": in_process_st,
             "not_placed_students": not_placed_st,
             "placement_rate_percentage": rate,
             "average_ctc_lpa": avg_ctc
@@ -141,7 +139,7 @@ async def get_analytics_companies_endpoint(
     current_admin: AdminUser = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ) -> dict[str, Any]:
-    """Retrieves company-wise candidate participation, progression, placement, and CTC SQL metrics."""
+    """Retrieves company-wise candidate participation, placement, and CTC SQL metrics."""
     companies = db.scalars(select(Company).order_by(Company.name.asc())).all()
 
     companies_stats = []
@@ -164,7 +162,7 @@ async def get_analytics_companies_endpoint(
             .where(Placement.drive_id.in_(drive_ids))
         ) or 0
 
-        progression_count = max(0, total_registered - total_placed)
+        unplaced_count = max(0, total_registered - total_placed)
 
         max_ctc = db.scalar(
             select(func.max(Placement.package_ctc))
@@ -177,7 +175,8 @@ async def get_analytics_companies_endpoint(
             "industry": c.industry,
             "drives_count": len(drive_ids),
             "registered_students": total_registered,
-            "progression_counts": progression_count,
+            "unplaced_counts": unplaced_count,
+            "progression_counts": unplaced_count,
             "placed_students": total_placed,
             "max_ctc_lpa": float(max_ctc) if max_ctc else 0.0
         })
@@ -237,7 +236,7 @@ async def get_student_analytics_endpoint(
     current_admin: AdminUser = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ) -> dict[str, Any]:
-    """Retrieves student-specific analytics: registered, progression, placed companies, highest round per company, overall status."""
+    """Retrieves student-specific analytics: registered, unplaced, placed companies, highest round per company, overall status."""
     student = db.scalar(select(Student).where(Student.register_number == register_number))
     if not student:
         raise HTTPException(
@@ -257,7 +256,7 @@ async def get_student_analytics_endpoint(
 
     company_breakdown = []
     registered_companies = 0
-    progression_companies = 0
+    unplaced_companies = 0
     placed_companies = 0
 
     for reg in registrations:
@@ -284,11 +283,9 @@ async def get_student_analytics_endpoint(
         if is_placed:
             placed_companies += 1
             c_status = "PLACED"
-        elif len(stage_results) > 0:
-            progression_companies += 1
-            c_status = "PROGRESSION"
         else:
-            c_status = "REGISTERED"
+            unplaced_companies += 1
+            c_status = "NOT PLACED"
 
         company_breakdown.append({
             "drive_id": reg.drive_id,
@@ -297,7 +294,7 @@ async def get_student_analytics_endpoint(
             "status": c_status
         })
 
-    overall_status = "PLACED" if len(placements) > 0 else ("PROGRESSION" if progression_companies > 0 else "UNPLACED")
+    overall_status = "PLACED" if len(placements) > 0 else "UNPLACED"
 
     return {
         "register_number": student.register_number,
@@ -306,7 +303,8 @@ async def get_student_analytics_endpoint(
         "cgpa": student.cgpa,
         "overall_status": overall_status,
         "registered_companies": registered_companies,
-        "progression_companies": progression_companies,
+        "unplaced_companies": unplaced_companies,
+        "progression_companies": unplaced_companies,
         "placed_companies": placed_companies,
         "company_breakdown": company_breakdown
     }

@@ -1,3 +1,5 @@
+
+
 import React from "react";
 import { AlertTriangle, X } from "lucide-react";
 
@@ -27,12 +29,12 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
-            <div className="relative w-full max-w-md bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+            <div className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden p-6">
                 <button
                     onClick={onCancel}
                     disabled={isLoading}
-                    className="absolute top-4 right-4 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
+                    className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors"
                 >
                     <X className="w-5 h-5" />
                 </button>
@@ -61,8 +63,8 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
                         onClick={onConfirm}
                         disabled={isLoading}
                         className={`px-4 py-2 text-sm font-medium text-slate-900 dark:text-white rounded-lg transition-colors flex items-center space-x-2 ${isDangerous
-                                ? "bg-rose-600 hover:bg-rose-500"
-                                : "bg-indigo-600 hover:bg-indigo-500"
+                            ? "bg-rose-600 hover:bg-rose-500"
+                            : "bg-indigo-600 hover:bg-indigo-500"
                             }`}
                     >
                         {isLoading ? "Processing..." : confirmLabel}

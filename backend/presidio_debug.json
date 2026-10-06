@@ -1,0 +1,39 @@
+[
+  {
+    "id": 9,
+    "name": "Presidio",
+    "drives": [
+      {
+        "id": 10,
+        "name": "Presidio Recruitment Drive 2026",
+        "regs": 16,
+        "stages": [
+          {
+            "id": 41,
+            "order": 1,
+            "name": "Round 1 - Aptitude Test",
+            "category": "REGISTERED",
+            "qualified": 15,
+            "total": 15
+          },
+          {
+            "id": 42,
+            "order": 2,
+            "name": "Round 2 - Technical Interview",
+            "category": "PROGRESSION",
+            "qualified": 0,
+            "total": 0
+          },
+          {
+            "id": 43,
+            "order": 3,
+            "name": "Offer List",
+            "category": "PLACED",
+            "qualified": 3,
+            "total": 3
+          }
+        ]
+      }
+    ]
+  }
+]

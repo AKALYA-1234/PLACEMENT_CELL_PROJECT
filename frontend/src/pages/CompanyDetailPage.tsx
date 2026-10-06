@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { api } from "../api/client";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { StatusBadge } from "../components/StatusBadge";
-import { ArrowLeft, Building2, Users, Award, Target, ExternalLink } from "lucide-react";
+import { ArrowLeft, Building2, Users, Award, UserX, ExternalLink } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
 
 interface DriveData {
@@ -93,7 +93,7 @@ const CompanyDetailPage: React.FC = () => {
 
     return (
         <div className="max-w-5xl mx-auto space-y-6">
-            <button onClick={() => navigate(-1)} className="flex items-center space-x-1 text-sm text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
+            <button onClick={() => navigate(-1)} className="flex items-center space-x-1 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                 <ArrowLeft className="w-4 h-4" /><span>Back to Companies</span>
             </button>
 
@@ -101,11 +101,11 @@ const CompanyDetailPage: React.FC = () => {
             <div className="bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
                 <div className="flex items-center space-x-4">
                     <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-violet-600 to-purple-600 flex items-center justify-center shadow-lg shadow-violet-500/20">
-                        <Building2 className="w-7 h-7 text-slate-900 dark:text-white" />
+                        <Building2 className="w-7 h-7 text-white" />
                     </div>
                     <div>
                         <h1 className="text-xl font-bold text-slate-900 dark:text-white">{company.name}</h1>
-                        <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">{company.industry || "Industry not specified"}</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400">{company.industry || "Industry not specified"}</p>
                     </div>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5">
@@ -116,7 +116,7 @@ const CompanyDetailPage: React.FC = () => {
                         { label: "Selection Rate", value: `${stats.selection_rate_percentage}%` },
                     ].map((item) => (
                         <div key={item.label}>
-                            <p className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider">{item.label}</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400 uppercase tracking-wider font-semibold">{item.label}</p>
                             <p className="text-sm font-medium text-slate-900 dark:text-white mt-0.5 truncate">{item.value}</p>
                         </div>
                     ))}
@@ -126,14 +126,14 @@ const CompanyDetailPage: React.FC = () => {
             {/* KPI Cards */}
             <div className="grid grid-cols-3 gap-4">
                 {[
-                    { label: "Registered", value: stats.registered_candidates, icon: Users, color: "text-indigo-400" },
-                    { label: "In Progression", value: Math.max(0, stats.registered_candidates - stats.placed_candidates), icon: Target, color: "text-amber-400" },
-                    { label: "Placed", value: stats.placed_candidates, icon: Award, color: "text-emerald-400" },
+                    { label: "Registered", value: stats.registered_candidates, icon: Users, color: "text-indigo-600 dark:text-indigo-400" },
+                    { label: "Not Placed", value: Math.max(0, stats.registered_candidates - stats.placed_candidates), icon: UserX, color: "text-rose-600 dark:text-rose-400" },
+                    { label: "Placed", value: stats.placed_candidates, icon: Award, color: "text-emerald-600 dark:text-emerald-400" },
                 ].map((kpi) => (
                     <div key={kpi.label} className="bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-center">
                         <kpi.icon className={`w-5 h-5 ${kpi.color} mx-auto mb-1`} />
                         <p className={`text-2xl font-bold ${kpi.color}`}>{kpi.value}</p>
-                        <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 mt-0.5">{kpi.label}</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 font-medium mt-0.5">{kpi.label}</p>
                     </div>
                 ))}
             </div>
@@ -144,10 +144,12 @@ const CompanyDetailPage: React.FC = () => {
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Round-wise Selection Funnel</h3>
                     <ResponsiveContainer width="100%" height={280}>
                         <BarChart data={funnelData} layout="vertical" margin={{ left: 20 }}>
-                            <XAxis type="number" tick={{ fill: "#94a3b8", fontSize: 11 }} />
-                            <YAxis type="category" dataKey="name" tick={{ fill: "#e2e8f0", fontSize: 12 }} width={120} />
+                            <XAxis type="number" tick={{ fill: "#64748b", fontSize: 11 }} />
+                            <YAxis type="category" dataKey="name" tick={{ fill: "#64748b", fontSize: 12 }} width={120} />
                             <Tooltip
-                                contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #334155", borderRadius: "12px", color: "#fff", fontSize: "12px" }}
+                                contentStyle={{ backgroundColor: "#0f172a", border: "1px solid #334155", borderRadius: "10px", color: "#f8fafc", padding: "10px 14px", fontSize: "12px" }}
+                                itemStyle={{ color: "#f8fafc", fontWeight: 500 }}
+                                labelStyle={{ color: "#ffffff", fontWeight: 700, marginBottom: "4px" }}
                             />
                             <Bar dataKey="qualified" radius={[0, 6, 6, 0]}>
                                 {funnelData.map((_, idx) => (
@@ -165,19 +167,19 @@ const CompanyDetailPage: React.FC = () => {
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Candidate List ({students.length})</h3>
                 </div>
                 {students.length === 0 ? (
-                    <div className="p-6 text-center text-sm text-slate-400 dark:text-slate-500 dark:text-slate-400">No candidates found.</div>
+                    <div className="p-6 text-center text-sm text-slate-600 dark:text-slate-400">No candidates found.</div>
                 ) : (
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
                             <thead className="bg-slate-100 dark:bg-slate-800/50">
                                 <tr>
-                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">Register No.</th>
-                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">Name</th>
-                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">Department</th>
-                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">Drive</th>
-                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">Status</th>
-                                    <th className="text-right px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">CTC</th>
-                                    <th className="text-center px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase">View</th>
+                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase">Register No.</th>
+                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase">Name</th>
+                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase">Department</th>
+                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase">Drive</th>
+                                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase">Status</th>
+                                    <th className="text-right px-4 py-3 text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase">CTC</th>
+                                    <th className="text-center px-4 py-3 text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase">View</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200 dark:divide-slate-800/50">
