@@ -21,7 +21,9 @@ api.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-// DEMO MODE: 401 redirect interceptor removed to prevent login redirects.
+// DEMO MODE: 401 errors are passed through without redirecting to /login.
+// The token is set by AuthContext auto-login; if it expires, API calls
+// will fail gracefully with error messages in the UI.
 api.interceptors.response.use(
     (response) => response,
     (error) => Promise.reject(error)

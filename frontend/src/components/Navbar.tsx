@@ -1,9 +1,11 @@
 import React from "react";
+import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { ShieldCheck, Sun, Moon } from "lucide-react";
 
-// DEMO MODE: Logout removed, static admin badge shown.
+// DEMO MODE: Logout button removed. Admin info comes from real API response.
 export const Navbar: React.FC = () => {
+    const { admin } = useAuth();
     const { theme, toggleTheme } = useTheme();
 
     return (
@@ -27,15 +29,17 @@ export const Navbar: React.FC = () => {
                     {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
                 </button>
 
-                <div className="flex items-center space-x-3 bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700/60">
-                    <div className="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">
-                        D
+                {admin && (
+                    <div className="flex items-center space-x-3 bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700/60">
+                        <div className="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">
+                            {admin.full_name?.charAt(0) || "A"}
+                        </div>
+                        <div className="text-left hidden sm:block">
+                            <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">{admin.full_name}</p>
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400">{admin.role}</p>
+                        </div>
                     </div>
-                    <div className="text-left hidden sm:block">
-                        <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">Demo Admin</p>
-                        <p className="text-[10px] text-slate-500 dark:text-slate-400">super_admin</p>
-                    </div>
-                </div>
+                )}
             </div>
         </header>
     );
