@@ -98,32 +98,7 @@ const CompaniesPage: React.FC = () => {
                 </form>
             </div>
 
-            <div className="flex flex-wrap items-end gap-3 p-4 bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-2xl">
-                <div className="flex items-center gap-2 w-full text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide">
-                    <SlidersHorizontal className="w-4 h-4" /> Filters
-                </div>
-                <select value={status} onChange={(e) => setStatus(e.target.value)} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-800 dark:text-slate-200 outline-none">
-                    <option value="">All participation</option>
-                    <option value="REGISTERED">Registered</option>
-                    <option value="PLACED">Placed</option>
-                    <option value="NON_PLACED">Non-placed</option>
-                </select>
-                <select value={department} onChange={(e) => setDepartment(e.target.value)} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-800 dark:text-slate-200 outline-none">
-                    <option value="">All departments</option>
-                    {filterOptions.departments.map((item) => <option key={item} value={item}>{item}</option>)}
-                </select>
-                <select value={roundName} onChange={(e) => setRoundName(e.target.value)} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-800 dark:text-slate-200 outline-none">
-                    <option value="">All rounds</option>
-                    {filterOptions.rounds.map((item) => <option key={item} value={item}>{item}</option>)}
-                </select>
-                <select value={academicYear} onChange={(e) => setAcademicYear(e.target.value)} className="px-3 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-800 dark:text-slate-200 outline-none">
-                    <option value="">All academic years</option>
-                    {filterOptions.academic_years.map((item) => <option key={item} value={item}>{item}</option>)}
-                </select>
-                <input value={industry} onChange={(e) => setIndustry(e.target.value)} placeholder="Industry" className="px-3 py-2 w-36 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 outline-none" />
-                <button onClick={applyFilters} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-medium transition-colors">Apply</button>
-                <button onClick={clearFilters} className="px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm">Clear</button>
-            </div>
+
 
             {isLoading ? (
                 <LoadingSpinner />

@@ -212,13 +212,17 @@ async def get_company_detail_endpoint(
 @router.get("/{company_id}/students")
 async def get_company_students_endpoint(
     company_id: int,
-    status_filter: Optional[str] = Query(None, alias="status", description="Filter by candidate status: PLACED / REGISTERED"),
+    status_filter: Optional[str] = Query(None, alias="status", description="Filter by candidate status: PLACED / REGISTERED / NON_PLACED"),
+    department: Optional[str] = Query(None, description="Filter by student department"),
+    round_name: Optional[str] = Query(None, description="Filter by placement stage/round name"),
+    academic_year: Optional[str] = Query(None, description="Filter by drive academic year"),
+    search: Optional[str] = Query(None, description="Search candidate by name or register number"),
     page: int = Query(1, ge=1),
     limit: int = Query(10, ge=1, le=100),
     current_admin: AdminUser = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ) -> dict[str, Any]:
-    """Retrieves unique candidates participating in or placed by drives of a specific company."""
+    """Retrieves candidates participating in or placed by drives of a specific company with search and filtering capabilities."""
     company = db.scalar(select(Company).where(Company.id == company_id))
     if not company:
         raise HTTPException(
@@ -226,75 +230,129 @@ async def get_company_students_endpoint(
             detail=f"Company with ID {company_id} not found."
         )
 
-    drive_ids = db.scalars(select(PlacementDrive.id).where(PlacementDrive.company_id == company.id)).all()
-    if not drive_ids:
-        return {"items": [], "total": 0, "page": page, "limit": limit, "pages": 1}
+    drive_q = select(PlacementDrive.id).where(PlacementDrive.company_id == company.id)
+    if academic_year:
+        drive_q = drive_q.where(PlacementDrive.academic_year == academic_year)
+    drive_ids = db.scalars(drive_q).all()
 
-    if status_filter and status_filter.upper() == "PLACED":
-        # Select unique placed students
-        subq = (
-            select(Placement.student_id, func.max(Placement.package_ctc).label("max_ctc"))
-            .where(Placement.drive_id.in_(drive_ids))
-            .group_by(Placement.student_id)
-            .subquery()
+    if not drive_ids:
+        return {
+            "items": [],
+            "total": 0,
+            "page": page,
+            "limit": limit,
+            "pages": 1,
+            "filter_options": {"departments": [], "rounds": [], "academic_years": []}
+        }
+
+    # Base query for students registered for these drives
+    reg_subq = (
+        select(StudentRegistration.student_id)
+        .where(StudentRegistration.drive_id.in_(drive_ids))
+        .distinct()
+        .subquery()
+    )
+
+    query = select(Student).join(reg_subq, Student.id == reg_subq.c.student_id)
+
+    if search:
+        query = query.where(
+            or_(
+                Student.register_number.ilike(f"%{search}%"),
+                Student.full_name.ilike(f"%{search}%")
+            )
         )
-        query = (
-            select(Student, subq.c.max_ctc)
-            .join(subq, Student.id == subq.c.student_id)
-            .order_by(Student.register_number.asc())
-        )
-    else:
-        # Select unique registered students
-        subq = (
-            select(StudentRegistration.student_id)
-            .where(StudentRegistration.drive_id.in_(drive_ids))
+
+    if department:
+        query = query.where(Student.department.ilike(f"%{department.strip()}%"))
+
+    placed_subq = (
+        select(Placement.student_id)
+        .where(Placement.drive_id.in_(drive_ids))
+        .distinct()
+        .subquery()
+    )
+
+    if status_filter:
+        s_upper = status_filter.upper()
+        if s_upper == "PLACED":
+            query = query.where(Student.id.in_(placed_subq))
+        elif s_upper in ("NON_PLACED", "NOT_PLACED", "UNPLACED"):
+            query = query.where(~Student.id.in_(placed_subq))
+
+    if round_name:
+        stage_subq = (
+            select(StudentStageResult.student_id)
+            .join(PlacementStage, PlacementStage.id == StudentStageResult.stage_id)
+            .where(
+                PlacementStage.drive_id.in_(drive_ids),
+                PlacementStage.stage_name == round_name,
+                StudentStageResult.status == "QUALIFIED"
+            )
             .distinct()
             .subquery()
         )
-        query = (
-            select(Student)
-            .join(subq, Student.id == subq.c.student_id)
-            .order_by(Student.register_number.asc())
-        )
+        query = query.where(Student.id.in_(stage_subq))
 
     total_query = select(func.count()).select_from(query.subquery())
     total = db.scalar(total_query) or 0
 
     offset = (page - 1) * limit
-    results = db.execute(query.offset(offset).limit(limit)).all()
+    students = db.scalars(query.order_by(Student.register_number.asc()).offset(offset).limit(limit)).all()
 
     items = []
-    for row in results:
-        if status_filter and status_filter.upper() == "PLACED":
-            student = row[0]
-            max_ctc = row[1]
-        else:
-            student = row[0]
-            max_ctc = None
-
+    for s in students:
         placement = db.scalar(
-            select(Placement).where(Placement.student_id == student.id, Placement.drive_id.in_(drive_ids))
+            select(Placement).where(Placement.student_id == s.id, Placement.drive_id.in_(drive_ids))
         )
-
         items.append({
-            "student_id": student.id,
-            "register_number": student.register_number,
-            "full_name": student.full_name,
-            "department": student.department,
+            "student_id": s.id,
+            "register_number": s.register_number,
+            "full_name": s.full_name,
+            "department": s.department,
             "drive_name": company.name + " Campus Drive",
             "is_placed": placement is not None,
-            "package_ctc": placement.package_ctc if placement else max_ctc
+            "package_ctc": placement.package_ctc if placement else None
         })
 
     pages = (total + limit - 1) // limit if total > 0 else 1
+
+    # Extract filter options specific to this company
+    comp_departments = db.scalars(
+        select(Student.department)
+        .join(StudentRegistration, StudentRegistration.student_id == Student.id)
+        .where(StudentRegistration.drive_id.in_(drive_ids), Student.department.is_not(None), Student.department != "")
+        .distinct()
+        .order_by(Student.department.asc())
+    ).all()
+
+    comp_rounds = db.scalars(
+        select(PlacementStage.stage_name)
+        .where(PlacementStage.drive_id.in_(drive_ids), PlacementStage.stage_name.is_not(None))
+        .distinct()
+        .order_by(PlacementStage.stage_order.asc())
+    ).all()
+
+    comp_academic_years = db.scalars(
+        select(PlacementDrive.academic_year)
+        .where(PlacementDrive.company_id == company.id, PlacementDrive.academic_year.is_not(None))
+        .distinct()
+        .order_by(PlacementDrive.academic_year.desc())
+    ).all()
 
     return {
         "items": items,
         "total": total,
         "page": page,
         "limit": limit,
-        "pages": pages
+        "pages": pages,
+        "filter_options": {
+            "departments": comp_departments,
+            "rounds": comp_rounds,
+            "academic_years": comp_academic_years
+        }
     }
+
 
 
 @router.get("/{company_id}/statistics")
