@@ -1,10 +1,9 @@
 import React from "react";
-import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
-import { LogOut, User, ShieldCheck, Sun, Moon } from "lucide-react";
+import { ShieldCheck, Sun, Moon } from "lucide-react";
 
+// DEMO MODE: Logout removed, static admin badge shown.
 export const Navbar: React.FC = () => {
-    const { admin, logout } = useAuth();
     const { theme, toggleTheme } = useTheme();
 
     return (
@@ -28,25 +27,15 @@ export const Navbar: React.FC = () => {
                     {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
                 </button>
 
-                {admin && (
-                    <div className="flex items-center space-x-3 bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700/60">
-                        <div className="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">
-                            {admin.full_name?.charAt(0) || "A"}
-                        </div>
-                        <div className="text-left hidden sm:block">
-                            <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">{admin.full_name}</p>
-                            <p className="text-[10px] text-slate-500 dark:text-slate-400">{admin.role}</p>
-                        </div>
+                <div className="flex items-center space-x-3 bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700/60">
+                    <div className="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">
+                        D
                     </div>
-                )}
-
-                <button
-                    onClick={logout}
-                    className="p-2 text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-xl transition-all border border-transparent hover:border-rose-200 dark:hover:border-rose-500/20"
-                    title="Sign Out"
-                >
-                    <LogOut className="w-5 h-5" />
-                </button>
+                    <div className="text-left hidden sm:block">
+                        <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">Demo Admin</p>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400">super_admin</p>
+                    </div>
+                </div>
             </div>
         </header>
     );

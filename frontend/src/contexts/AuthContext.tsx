@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { api } from "../api/client";
+import React, { createContext, useContext } from "react";
 
 export interface AdminUser {
     id: number;
@@ -19,53 +18,27 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// DEMO MODE: Hardcoded admin user — no API calls or tokens required.
+// Revert this file to restore real authentication.
+const DEMO_ADMIN: AdminUser = {
+    id: 0,
+    email: "demo@portal.local",
+    full_name: "Demo Admin",
+    role: "super_admin",
+    is_active: true,
+};
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [admin, setAdmin] = useState<AdminUser | null>(null);
-    const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        const fetchAdmin = async () => {
-            if (!token) {
-                setIsLoading(false);
-                return;
-            }
-            try {
-                const response = await api.get<AdminUser>("/api/auth/me");
-                setAdmin(response.data);
-            } catch (err) {
-                console.error("Failed to verify token:", err);
-                localStorage.removeItem("token");
-                setToken(null);
-                setAdmin(null);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchAdmin();
-    }, [token]);
-
-    const login = async (email: string, password: string) => {
-        const response = await api.post<{ access_token: string }>("/api/auth/login", { email, password });
-        const accessToken = response.data.access_token;
-        localStorage.setItem("token", accessToken);
-        setToken(accessToken);
-
-        const meResponse = await api.get<AdminUser>("/api/auth/me", {
-            headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        setAdmin(meResponse.data);
-    };
-
-    const logout = () => {
-        localStorage.removeItem("token");
-        setToken(null);
-        setAdmin(null);
+    const value: AuthContextType = {
+        admin: DEMO_ADMIN,
+        token: "demo-token",
+        isLoading: false,
+        login: async () => { },
+        logout: () => { },
     };
 
     return (
-        <AuthContext.Provider value={{ admin, token, isLoading, login, logout }}>
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     );

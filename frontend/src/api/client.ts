@@ -21,15 +21,8 @@ api.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
+// DEMO MODE: 401 redirect interceptor removed to prevent login redirects.
 api.interceptors.response.use(
     (response) => response,
-    (error) => {
-        if (error.response && error.response.status === 401) {
-            localStorage.removeItem("token");
-            if (window.location.pathname !== "/login") {
-                window.location.href = "/login";
-            }
-        }
-        return Promise.reject(error);
-    }
+    (error) => Promise.reject(error)
 );

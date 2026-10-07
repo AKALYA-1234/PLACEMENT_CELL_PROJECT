@@ -1,25 +1,10 @@
 import React from "react";
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Sidebar } from "./Sidebar";
-import { useAuth } from "../contexts/AuthContext";
-import { LoadingSpinner } from "./LoadingSpinner";
 
+// DEMO MODE: Auth guard removed — layout always renders.
 export const Layout: React.FC = () => {
-    const { admin, isLoading } = useAuth();
-
-    if (isLoading) {
-        return (
-            <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center transition-colors duration-200">
-                <LoadingSpinner message="Initializing admin portal..." />
-            </div>
-        );
-    }
-
-    if (!admin) {
-        return <Navigate to="/login" replace />;
-    }
-
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-200">
             <Navbar />

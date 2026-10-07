@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { Layout } from "./components/Layout";
-import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import ExcelUploadPage from "./pages/ExcelUploadPage";
 import ImportPreviewPage from "./pages/ImportPreviewPage";
@@ -14,16 +13,14 @@ import CompaniesPage from "./pages/CompaniesPage";
 import CompanyDetailPage from "./pages/CompanyDetailPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 
+// DEMO MODE: LoginPage route removed — /login redirects to /dashboard.
 const App: React.FC = () => {
     return (
         <ThemeProvider>
             <BrowserRouter>
                 <AuthProvider>
                     <Routes>
-                        {/* Public Auth Route */}
-                        <Route path="/login" element={<LoginPage />} />
-
-                        {/* Protected Admin Routes */}
+                        {/* Admin Routes — no auth required in demo mode */}
                         <Route element={<Layout />}>
                             <Route path="/" element={<Navigate to="/dashboard" replace />} />
                             <Route path="/dashboard" element={<DashboardPage />} />
@@ -37,7 +34,7 @@ const App: React.FC = () => {
                             <Route path="/analytics" element={<AnalyticsPage />} />
                         </Route>
 
-                        {/* Fallback Catch-all */}
+                        {/* Fallback: /login and any unknown path → dashboard */}
                         <Route path="*" element={<Navigate to="/dashboard" replace />} />
                     </Routes>
                 </AuthProvider>
