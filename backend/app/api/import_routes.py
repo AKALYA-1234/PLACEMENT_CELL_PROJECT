@@ -9,6 +9,8 @@ from app.config import get_settings
 from app.database import get_db
 from app.models.admin_user import AdminUser
 from app.models import ImportLog, Company, PlacementDrive
+# TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
+# In demo mode, get_current_admin returns a demo admin when no token is present.
 from app.utils.security import get_current_admin
 from app.services.excel_parser.validation_models import ImportValidationResponse
 from app.services.excel_parser.confirm_models import ImportConfirmResponse

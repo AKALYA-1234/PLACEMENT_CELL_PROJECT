@@ -13,14 +13,15 @@ import CompaniesPage from "./pages/CompaniesPage";
 import CompanyDetailPage from "./pages/CompanyDetailPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 
-// DEMO MODE: LoginPage route removed — /login redirects to /dashboard.
+// TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
+// DEMO MODE: LoginPage route removed — all paths redirect to /dashboard.
 const App: React.FC = () => {
     return (
         <ThemeProvider>
             <BrowserRouter>
                 <AuthProvider>
                     <Routes>
-                        {/* Admin Routes — no auth required in demo mode */}
+                        {/* Admin Routes — unauthenticated demo mode */}
                         <Route element={<Layout />}>
                             <Route path="/" element={<Navigate to="/dashboard" replace />} />
                             <Route path="/dashboard" element={<DashboardPage />} />

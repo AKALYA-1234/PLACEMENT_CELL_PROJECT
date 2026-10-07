@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { api } from "../api/client";
+import React, { createContext, useContext, useState } from "react";
 
+// TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
 export interface AdminUser {
     id: number;
     email: string;
@@ -13,80 +13,38 @@ interface AuthContextType {
     admin: AdminUser | null;
     token: string | null;
     isLoading: boolean;
-    demoError: string | null;
     login: (email: string, password: string) => Promise<void>;
     logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// DEMO MODE: Auto-login credentials for the demo admin account.
-// The frontend calls the real backend /api/auth/login on startup.
-// Revert this file to restore manual login.
-const DEMO_EMAIL = "admin@college.edu";
-const DEMO_PASSWORD = "admin123";
+// TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
+// DEMO MODE: Static demo admin user — no login API calls, credentials, or tokens required.
+const DEMO_ADMIN: AdminUser = {
+    id: 1,
+    email: "admin@college.edu",
+    full_name: "Demo Admin",
+    role: "super_admin",
+    is_active: true,
+};
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [admin, setAdmin] = useState<AdminUser | null>(null);
-    const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [demoError, setDemoError] = useState<string | null>(null);
+    // TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
+    const [admin] = useState<AdminUser | null>(DEMO_ADMIN);
+    const [token] = useState<string | null>("demo-token");
+    const [isLoading] = useState<boolean>(false);
 
-    useEffect(() => {
-        const demoLogin = async () => {
-            try {
-                // Step 1: Authenticate with the real backend login API
-                const loginResponse = await api.post<{ access_token: string }>(
-                    "/api/auth/login",
-                    { email: DEMO_EMAIL, password: DEMO_PASSWORD }
-                );
-                const accessToken = loginResponse.data.access_token;
-
-                // Step 2: Store the real JWT exactly like the normal login flow
-                localStorage.setItem("token", accessToken);
-                setToken(accessToken);
-
-                // Step 3: Fetch the admin profile using the real token
-                const meResponse = await api.get<AdminUser>("/api/auth/me", {
-                    headers: { Authorization: `Bearer ${accessToken}` },
-                });
-                setAdmin(meResponse.data);
-            } catch (err) {
-                console.error("Demo auto-login failed:", err);
-                setDemoError(
-                    "Demo authentication failed. Please check the backend connection."
-                );
-                localStorage.removeItem("token");
-                setToken(null);
-                setAdmin(null);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        demoLogin();
-    }, []);
-
-    const login = async (email: string, password: string) => {
-        const response = await api.post<{ access_token: string }>("/api/auth/login", { email, password });
-        const accessToken = response.data.access_token;
-        localStorage.setItem("token", accessToken);
-        setToken(accessToken);
-
-        const meResponse = await api.get<AdminUser>("/api/auth/me", {
-            headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        setAdmin(meResponse.data);
+    const login = async () => {
+        // TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
     };
 
     const logout = () => {
-        localStorage.removeItem("token");
-        setToken(null);
-        setAdmin(null);
+        // TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
     };
 
     return (
-        <AuthContext.Provider value={{ admin, token, isLoading, demoError, login, logout }}>
+        <AuthContext.Provider value={{ admin, token, isLoading, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

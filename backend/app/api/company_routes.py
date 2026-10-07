@@ -6,6 +6,8 @@ from sqlalchemy import select, func, or_, exists, not_
 from app.database import get_db
 from app.models.admin_user import AdminUser
 from app.models import Company, PlacementDrive, PlacementStage, StudentRegistration, StudentStageResult, Placement, Student
+# TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
+# In demo mode, get_current_admin returns a demo admin when no token is present.
 from app.utils.security import get_current_admin
 
 router = APIRouter(prefix="/admin/companies", tags=["Admin Companies"])

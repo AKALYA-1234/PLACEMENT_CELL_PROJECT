@@ -10,6 +10,8 @@ export const api = axios.create({
     },
 });
 
+// TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
+// In demo mode, token is optional; if present in localStorage, it will be attached.
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("token");
@@ -21,9 +23,8 @@ api.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-// DEMO MODE: 401 errors are passed through without redirecting to /login.
-// The token is set by AuthContext auto-login; if it expires, API calls
-// will fail gracefully with error messages in the UI.
+// TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
+// 401 errors pass through without forcing /login redirects in unauthenticated demo mode.
 api.interceptors.response.use(
     (response) => response,
     (error) => Promise.reject(error)

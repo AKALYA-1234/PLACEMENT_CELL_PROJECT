@@ -12,7 +12,9 @@ from app.models.admin_user import AdminUser
 
 settings = get_settings()
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
+# TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
+# For temporary demo mode, auto_error is False so requests without Authorization headers are accepted.
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login", auto_error=False)
 
 
 def hash_password(password: str) -> str:
@@ -43,34 +45,36 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None) -> s
     return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
 
+# TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
 def get_current_admin(
-    token: str = Depends(oauth2_scheme),
+    token: str | None = Depends(oauth2_scheme),
     db: Session = Depends(get_db),
 ) -> AdminUser:
     """
-    FastAPI dependency: decodes JWT, verifies signature, and returns current active AdminUser.
+    FastAPI dependency: decodes JWT if provided; falls back to demo admin for unauthenticated demo mode.
+    # TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
     """
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-        email: str | None = payload.get("sub")
-        if email is None:
-            raise credentials_exception
-    except JWTError:
-        raise credentials_exception
+    if token:
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+            email: str | None = payload.get("sub")
+            if email:
+                admin = db.scalar(select(AdminUser).where(AdminUser.email == email))
+                if admin and admin.is_active:
+                    return admin
+        except Exception:
+            pass
 
-    admin = db.scalar(select(AdminUser).where(AdminUser.email == email))
+    # TODO: RESTORE AUTHENTICATION BEFORE PRODUCTION
+    # Temporary fallback: Return first active admin from database or a demo admin user instance
+    admin = db.scalar(select(AdminUser).where(AdminUser.is_active == True))
     if admin is None:
-        raise credentials_exception
-
-    if not admin.is_active:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Inactive admin account",
+        admin = AdminUser(
+            id=1,
+            email="admin@college.edu",
+            full_name="Demo Admin",
+            role="super_admin",
+            is_active=True,
         )
-
     return admin
+
